@@ -18,14 +18,14 @@ class SplashActivity : ComponentActivity() {
             NOAHTheme {
                 SplashContent()
                 Handler(Looper.getMainLooper()).postDelayed({
-                    startHomeActivity()
+                    startMainActivity()
                 }, 1500)
 
             }
         }
     }
 
-    private fun startHomeActivity() {
+    private fun startMainActivity() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
         finish()
