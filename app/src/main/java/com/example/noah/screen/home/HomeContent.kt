@@ -1,5 +1,6 @@
 package com.example.noah.screen.home
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,15 +11,22 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
+import com.example.noah.R
 
 @Composable
 fun HomeContent() {
-    Box (modifier = Modifier.fillMaxSize()){
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = colorResource(id = R.color.color_app))
+    ) {
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            HomeTopBar()
             CardItem(name = "Wifi Order")
             CardItem(name = "Add Finger Print")
             CardItem(name = "Delete Finger User ")
