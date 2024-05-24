@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
@@ -17,6 +18,10 @@ import com.example.noah.R
 
 @Composable
 fun HomeContent() {
+    val vm: HomeViewModel = remember {
+        HomeViewModel()
+    }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -27,8 +32,7 @@ fun HomeContent() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             HomeTopBar()
-            CardItem(name = "Wifi Order")
-            CardItem(name = "Add Finger Print")
+            CardItem(name = "Add Finger Print", onClick = { vm.push(true) })
             CardItem(name = "Delete Finger User ")
             CardItem(name = "Finger Mode")
             CardItem(name = "Un Lock")
