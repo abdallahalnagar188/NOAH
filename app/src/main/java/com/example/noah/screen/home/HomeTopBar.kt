@@ -21,18 +21,6 @@ fun HomeTopBar() {
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center
     ) {
-//            Text(
-//                text = "NOAH APP",
-//                color = Color.Black,
-//                fontFamily = FontFamily.Default,
-//                fontSize = 28.sp,
-//                fontWeight = FontWeight.Medium,
-//                modifier = Modifier
-//                    .padding(10.dp)
-//                    .align(
-//                        Alignment.CenterVertically
-//                    )
-//            )
         Card(
             modifier = Modifier.padding(12.dp),
             shape = RoundedCornerShape(10.dp),
