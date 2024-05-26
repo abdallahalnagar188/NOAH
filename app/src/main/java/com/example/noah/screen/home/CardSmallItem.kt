@@ -13,10 +13,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import com.example.noah.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -24,7 +27,7 @@ fun CardSmallItem(modifier: Modifier, name: String) {
     Card(
         modifier = modifier,
         colors = CardDefaults.cardColors(
-            containerColor = Color.White
+            containerColor = colorResource(id = R.color.color2_app)
         ),
         shape = RoundedCornerShape(10.dp),
         elevation = CardDefaults.cardElevation(
@@ -41,7 +44,7 @@ fun CardSmallItem(modifier: Modifier, name: String) {
                 .padding(horizontal = 12.dp)
         ) {
             Text(
-                text = name, style = TextStyle(color = Color.Black),
+                text = name, style = TextStyle(color = Color.White),
                 fontSize = 22.sp,
                 fontWeight = FontWeight.Medium,
                 modifier = Modifier.align(Alignment.CenterVertically)

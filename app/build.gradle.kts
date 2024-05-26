@@ -66,6 +66,11 @@ dependencies {
     implementation("com.google.firebase:firebase-database-ktx")
     implementation(platform("com.google.firebase:firebase-bom:33.0.0"))
     implementation("com.google.firebase:firebase-analytics")
+    implementation(libs.androidx.navigation.runtime.ktx)
+    implementation(libs.androidx.navigation.compose)
+    implementation("androidx.navigation:navigation-compose:2.5.3")
+
+
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

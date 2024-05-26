@@ -23,19 +23,19 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.noah.R
 
 @Composable
 fun CardItem(name: String, onClick: () -> Unit = {}) {
     var switchState by remember { mutableStateOf(false) }
     var showDialog by remember { mutableStateOf(false) }
     var pendingSwitchState by remember { mutableStateOf(false) }
-    val vm: HomeViewModel = remember {
-        HomeViewModel()
-    }
     if (showDialog) {
         AlertDialog(
             onDismissRequest = { showDialog = false },
@@ -43,7 +43,7 @@ fun CardItem(name: String, onClick: () -> Unit = {}) {
             text = { Text("Are you sure you want to change the  state?") },
             confirmButton = {
                 Button(
-                    colors = ButtonDefaults.buttonColors(Color.Blue),
+                    colors = ButtonDefaults.buttonColors(colorResource(id = R.color.color2_app)),
                     onClick = {
                         onClick()
                         switchState = pendingSwitchState
@@ -57,7 +57,7 @@ fun CardItem(name: String, onClick: () -> Unit = {}) {
                 Button(
                     onClick = {
                         showDialog = false
-                    },colors = ButtonDefaults.buttonColors(Color.Blue),
+                    },colors = ButtonDefaults.buttonColors(colorResource(id = R.color.color2_app)),
                 ) {
                     Text("Cancel")
                 }
@@ -70,7 +70,7 @@ fun CardItem(name: String, onClick: () -> Unit = {}) {
             .height(100.dp)
             .padding(12.dp),
         colors = CardDefaults.cardColors(
-            containerColor = Color.White
+            containerColor = colorResource(id = R.color.color2_app)
         ),
         shape = RoundedCornerShape(10.dp),
         elevation = CardDefaults.cardElevation(
@@ -86,7 +86,7 @@ fun CardItem(name: String, onClick: () -> Unit = {}) {
         ) {
             Text(
                 text = name,
-                style = TextStyle(color = Color.Black),
+                style = TextStyle(color = Color.White),
                 fontSize = 22.sp,
                 fontWeight = FontWeight.Medium,
                 modifier = Modifier.align(Alignment.CenterVertically)
