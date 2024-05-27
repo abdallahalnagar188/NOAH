@@ -9,7 +9,7 @@ import com.google.firebase.database.FirebaseDatabase
 
 class HomeViewModel : ViewModel() {
     private val database = FirebaseDatabase.getInstance()
-    private val myRef = database.getReference("NoahDoor")
+    private val myRef = database.getReference()
     init {
         setupRealTimeListener()
     }
@@ -39,26 +39,20 @@ class HomeViewModel : ViewModel() {
 
         })
     }
+
+    fun updateWifiOrder (wifiOrder: Boolean) {
+        myRef.child("NoahDoor").child("WiFiOrder").setValue(wifiOrder)
+    }
+    fun updateAddFingerPrint (addFingerPrint: Boolean) {
+        myRef.child("NoahDoor").child("AddFingerUser").setValue(addFingerPrint)
+    }
+    fun updateDeleteFingerUser(deleteFingerUser:Boolean){
+        myRef.child("NoahDoor").child("DeleteFingerUsers").setValue(deleteFingerUser)
+    }
+    fun updateFingerMode(fingerMode:Boolean){
+        myRef.child("NoahDoor").child("FingerMode").setValue(fingerMode)
+    }
+    fun updateUnLock(unlock:Boolean){
+        myRef.child("NoahDoor").child("Unlock").setValue(unlock)
+    }
 }
-//
-//        fun push(addFingerPrint: Boolean) {
-//            val id = myRef.push().key
-//            val newUser = User(
-//                addFingerPrint,
-//                DeleteFingerUsers = true,
-//                DoorFingerUsers = "200",
-//                FingerMode = true,
-//                LastFingerUser = "2",
-//                Unlock = true,
-//                WifiOrder = false
-//            )
-//            if (id != null) {
-//                myRef.child(id).setValue(newUser).addOnSuccessListener {
-//                    Log.e("OnSuccess","suc")
-//                }.addOnFailureListener {
-//                    Log.e("OnFiler","fail")
-//                }
-//            }
-//        }
-//
-//    }

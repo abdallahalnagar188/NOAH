@@ -22,7 +22,7 @@ import com.example.noah.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CardSmallItem(modifier: Modifier, name: String) {
+fun CardSmallItem(modifier: Modifier, name: String, onClick: () -> Unit = {}) {
     Card(
         modifier = modifier,
         colors = CardDefaults.cardColors(
@@ -32,11 +32,12 @@ fun CardSmallItem(modifier: Modifier, name: String) {
         elevation = CardDefaults.cardElevation(
             defaultElevation = 7.dp
         ), onClick = {
+            onClick()
         }
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween,
+            horizontalArrangement = Arrangement.SpaceAround,
             modifier = Modifier
                 .fillMaxSize()
                 .padding(horizontal = 12.dp)
@@ -47,6 +48,7 @@ fun CardSmallItem(modifier: Modifier, name: String) {
                 fontWeight = FontWeight.Medium,
                 modifier = Modifier.align(Alignment.CenterVertically)
             )
+            Text(text = "1", style = TextStyle(color = Color.White), fontSize = 22.sp)
         }
     }
 }

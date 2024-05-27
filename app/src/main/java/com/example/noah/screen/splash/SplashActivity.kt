@@ -7,7 +7,7 @@ import android.os.Handler
 import android.os.Looper
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.example.noah.screen.MainActivity
+import com.example.noah.screen.home.MainActivity
 import com.example.noah.screen.splash.ui.theme.NOAHTheme
 
 @SuppressLint("CustomSplashScreen")

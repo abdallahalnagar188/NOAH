@@ -28,7 +28,7 @@ fun AboutUsButton(onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .height(110.dp)
+            .height(90.dp)
             .padding(16.dp),
         colors = CardDefaults.cardColors(
             containerColor = colorResource(id = R.color.color2_app)

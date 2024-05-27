@@ -26,7 +26,6 @@ fun HomeContent(navController: NavController) {
         HomeViewModel()
     }
     Scaffold {
-
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -37,12 +36,34 @@ fun HomeContent(navController: NavController) {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 HomeTopBar()
-                CardItem(name = "Add Finger Print", onClick = {
-                    //vm.push(true)
+                CardItem(name = "Wifi Order", onClick = {
+                    if (it) {
+                        vm.updateWifiOrder(true)
+                    } else (vm.updateWifiOrder(false))
                 })
-                CardItem(name = "Delete Finger User ")
-                CardItem(name = "Finger Mode")
-                CardItem(name = "Un Lock")
+                CardItem(
+                    name = "Add Finger Print",
+                    onClick = {
+                        if (it) {
+                            vm.updateAddFingerPrint(true)
+                        } else (vm.updateAddFingerPrint(false))
+                })
+                CardItem(name = "Delete Finger User ", onClick = {
+                    if (it) {
+                        vm.updateDeleteFingerUser(true)
+                    } else (vm.updateDeleteFingerUser(false))
+                })
+                CardItem(name = "Finger Mode", onClick = {
+                    if (it) {
+                        vm.updateFingerMode(true)
+                    } else (vm.updateFingerMode(false))
+                })
+                CardItem(name = "Un Lock", onClick = {
+                    if (it) {
+                        vm.updateUnLock(true)
+                    } else (vm.updateUnLock(false))
+                })
+
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -51,22 +72,25 @@ fun HomeContent(navController: NavController) {
                     CardSmallItem(
                         modifier = Modifier
                             .weight(0.5f)
-                            .height(80.dp)
+                            .height(60.dp)
                             .padding(horizontal = 6.dp),
-                        name = "Last User"
+                        name = "Last User", onClick = {
+
+                        }
                     )
                     CardSmallItem(
                         modifier = Modifier
                             .weight(0.5f)
-                            .height(80.dp)
+                            .height(60.dp)
                             .padding(horizontal = 6.dp),
-                        name = "Door Finger User"
+                        name = "Door Finger User", onClick = {
+                        }
                     )
                 }
                 AboutUsButton(onClick = {
                     navController.navigate("aboutUs")
-                })
-
+                }
+                )
             }
         }
     }
