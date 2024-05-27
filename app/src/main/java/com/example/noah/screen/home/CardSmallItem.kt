@@ -18,7 +18,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
 import com.example.noah.R
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -33,7 +32,6 @@ fun CardSmallItem(modifier: Modifier, name: String) {
         elevation = CardDefaults.cardElevation(
             defaultElevation = 7.dp
         ), onClick = {
-
         }
     ) {
         Row(
@@ -50,6 +48,5 @@ fun CardSmallItem(modifier: Modifier, name: String) {
                 modifier = Modifier.align(Alignment.CenterVertically)
             )
         }
-
     }
 }

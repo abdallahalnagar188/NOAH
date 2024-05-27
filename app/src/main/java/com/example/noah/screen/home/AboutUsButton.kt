@@ -20,13 +20,11 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
-import androidx.navigation.NavHostController
 import com.example.noah.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AboutUsButton() {
+fun AboutUsButton(onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -39,6 +37,7 @@ fun AboutUsButton() {
         elevation = CardDefaults.cardElevation(
             defaultElevation = 7.dp
         ), onClick = {
+            onClick()
         }
     ) {
         Row(

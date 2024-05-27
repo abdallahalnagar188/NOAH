@@ -2,7 +2,6 @@ package com.example.noah.screen.home
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.example.noah.models.User
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -40,25 +39,26 @@ class HomeViewModel : ViewModel() {
 
         })
     }
-
-    fun push(addFingerPrint: Boolean) {
-        val id = myRef.push().key
-        val newUser = User(
-            addFingerPrint,
-            DeleteFingerUsers = true,
-            DoorFingerUsers = "200",
-            FingerMode = true,
-            LastFingerUser = "2",
-            Unlock = true,
-            WifiOrder = false
-        )
-        if (id != null) {
-            myRef.child(id).setValue(newUser).addOnSuccessListener {
-                Log.e("OnSuccess","suc")
-            }.addOnFailureListener {
-                Log.e("OnFiler","fail")
-            }
-        }
-    }
-
 }
+//
+//        fun push(addFingerPrint: Boolean) {
+//            val id = myRef.push().key
+//            val newUser = User(
+//                addFingerPrint,
+//                DeleteFingerUsers = true,
+//                DoorFingerUsers = "200",
+//                FingerMode = true,
+//                LastFingerUser = "2",
+//                Unlock = true,
+//                WifiOrder = false
+//            )
+//            if (id != null) {
+//                myRef.child(id).setValue(newUser).addOnSuccessListener {
+//                    Log.e("OnSuccess","suc")
+//                }.addOnFailureListener {
+//                    Log.e("OnFiler","fail")
+//                }
+//            }
+//        }
+//
+//    }
