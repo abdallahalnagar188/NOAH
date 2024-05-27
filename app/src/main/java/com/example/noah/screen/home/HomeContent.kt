@@ -74,17 +74,18 @@ fun HomeContent(navController: NavController) {
                             .weight(0.5f)
                             .height(60.dp)
                             .padding(horizontal = 6.dp),
-                        name = "Last User", onClick = {
-
-                        }
+                        name = "Last User",
+                        onClick = {},
+                        num = "1"
                     )
                     CardSmallItem(
                         modifier = Modifier
                             .weight(0.5f)
                             .height(60.dp)
                             .padding(horizontal = 6.dp),
-                        name = "Door Finger User", onClick = {
-                        }
+                        name = "Users",
+                        onClick = {},
+                        num = "200"
                     )
                 }
                 AboutUsButton(onClick = {

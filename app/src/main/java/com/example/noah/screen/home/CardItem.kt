@@ -24,6 +24,7 @@ import com.example.noah.R
 
 @Composable
 fun CardItem(name: String, onClick: (Boolean) -> Unit = {}) {
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -55,7 +56,10 @@ fun CardItem(name: String, onClick: (Boolean) -> Unit = {}) {
             )
             Button(
                 onClick = { onClick(true) },
-                colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.color_app)),
+                colors = ButtonDefaults.buttonColors(
+                    contentColor = colorResource(id = R.color.white),
+                    containerColor = colorResource(id = R.color.teal_700)
+                ),
                 modifier = Modifier
                     .padding(8.dp)
                     .weight(0.3f)
@@ -64,7 +68,10 @@ fun CardItem(name: String, onClick: (Boolean) -> Unit = {}) {
             }
             Button(
                 onClick = { onClick(false) },
-                colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.color_app)),
+                colors = ButtonDefaults.buttonColors(
+                    contentColor = colorResource(id = R.color.white),
+                    containerColor = colorResource(id = R.color.teal_700)
+                ),
                 modifier = Modifier
                     .padding(8.dp)
                     .weight(0.3f)
