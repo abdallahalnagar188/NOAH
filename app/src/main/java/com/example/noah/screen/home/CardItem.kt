@@ -48,7 +48,7 @@ fun CardItem(name: String, onClick: (Boolean) -> Unit = {}) {
             Text(
                 text = name,
                 style = TextStyle(color = Color.White),
-                fontSize = 20.sp,
+                fontSize = 18.sp,
                 fontWeight = FontWeight.Medium,
                 modifier = Modifier
                     .align(Alignment.CenterVertically)
@@ -64,7 +64,7 @@ fun CardItem(name: String, onClick: (Boolean) -> Unit = {}) {
                     .padding(8.dp)
                     .weight(0.3f)
             ) {
-                Text(text = "true", fontSize = 20.sp)
+                Text(text = "true", fontSize = 16.sp)
             }
             Button(
                 onClick = { onClick(false) },
@@ -76,7 +76,7 @@ fun CardItem(name: String, onClick: (Boolean) -> Unit = {}) {
                     .padding(8.dp)
                     .weight(0.3f)
             ) {
-                Text(text = "false", fontSize = 20.sp)
+                Text(text = "false", fontSize = 16.sp)
             }
         }
     }
