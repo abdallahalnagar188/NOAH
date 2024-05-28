@@ -58,7 +58,7 @@ fun CardItem(name: String, onClick: (Boolean) -> Unit = {}) {
                 onClick = { onClick(true) },
                 colors = ButtonDefaults.buttonColors(
                     contentColor = colorResource(id = R.color.white),
-                    containerColor = colorResource(id = R.color.teal_700)
+                    containerColor = colorResource(id = R.color.green)
                 ),
                 modifier = Modifier
                     .padding(8.dp)
@@ -70,7 +70,7 @@ fun CardItem(name: String, onClick: (Boolean) -> Unit = {}) {
                 onClick = { onClick(false) },
                 colors = ButtonDefaults.buttonColors(
                     contentColor = colorResource(id = R.color.white),
-                    containerColor = colorResource(id = R.color.teal_700)
+                    containerColor = colorResource(id = R.color.green)
                 ),
                 modifier = Modifier
                     .padding(8.dp)

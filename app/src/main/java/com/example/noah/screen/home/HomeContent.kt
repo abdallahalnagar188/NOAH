@@ -22,9 +22,9 @@ import com.example.noah.R
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun HomeContent(navController: NavController) {
-    val vm: HomeViewModel = remember {
-        HomeViewModel()
-    }
+    val vm: HomeViewModel = remember { HomeViewModel() }
+
+
     Scaffold {
         Box(
             modifier = Modifier
@@ -48,17 +48,23 @@ fun HomeContent(navController: NavController) {
                             vm.updateAddFingerPrint(true)
                         } else (vm.updateAddFingerPrint(false))
                 })
-                CardItem(name = "Delete Finger User ", onClick = {
+                CardItem(
+                    name = "Delete Finger User ",
+                    onClick = {
                     if (it) {
                         vm.updateDeleteFingerUser(true)
                     } else (vm.updateDeleteFingerUser(false))
                 })
-                CardItem(name = "Finger Mode", onClick = {
+                CardItem(
+                    name = "Finger Mode",
+                    onClick = {
                     if (it) {
                         vm.updateFingerMode(true)
                     } else (vm.updateFingerMode(false))
                 })
-                CardItem(name = "Un Lock", onClick = {
+                CardItem(
+                    name = "Un Lock",
+                    onClick = {
                     if (it) {
                         vm.updateUnLock(true)
                     } else (vm.updateUnLock(false))

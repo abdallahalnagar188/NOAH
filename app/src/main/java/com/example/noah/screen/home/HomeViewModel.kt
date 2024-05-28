@@ -6,10 +6,12 @@ import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class HomeViewModel : ViewModel() {
     private val database = FirebaseDatabase.getInstance()
     private val myRef = database.getReference()
+
     init {
         setupRealTimeListener()
     }
@@ -26,19 +28,22 @@ class HomeViewModel : ViewModel() {
             }
 
             override fun onChildRemoved(snapshot: DataSnapshot) {
+                Log.e("onChildRemoved", snapshot.value.toString())
 
             }
 
             override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
-
+                Log.e("onChildMoved", snapshot.value.toString())
             }
 
             override fun onCancelled(error: DatabaseError) {
+                Log.e("onCancelled", error.toString())
 
             }
 
         })
     }
+
 
     fun updateWifiOrder (wifiOrder: Boolean) {
         myRef.child("NoahDoor").child("WiFiOrder").setValue(wifiOrder)
@@ -55,4 +60,10 @@ class HomeViewModel : ViewModel() {
     fun updateUnLock(unlock:Boolean){
         myRef.child("NoahDoor").child("Unlock").setValue(unlock)
     }
+
+//    fun readLastUser(){
+//        myRef.child("NoahDoor").child("Unlock").get().toString()
+//    }
+
+
 }
