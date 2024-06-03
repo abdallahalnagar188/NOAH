@@ -22,7 +22,13 @@ import com.example.noah.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CardSmallItem(modifier: Modifier, name: String, onClick: () -> Unit = {}, num: String) {
+fun CardSmallItem(
+    modifier: Modifier,
+    name: String,
+    onClick: () -> Unit = {},
+    num:String
+
+) {
     Card(
         modifier = modifier,
         colors = CardDefaults.cardColors(
@@ -48,7 +54,11 @@ fun CardSmallItem(modifier: Modifier, name: String, onClick: () -> Unit = {}, nu
                 fontWeight = FontWeight.Medium,
                 modifier = Modifier.align(Alignment.CenterVertically)
             )
-            Text(text =num, style = TextStyle(color = Color.White), fontSize = 22.sp)
+            Text(
+                text =num,
+                style = TextStyle(color = Color.White),
+                fontSize = 22.sp
+            )
         }
     }
 }

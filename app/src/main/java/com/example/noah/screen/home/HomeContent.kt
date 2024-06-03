@@ -11,7 +11,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
@@ -19,12 +22,32 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.noah.R
 import com.example.noah.view_model.HomeViewModel
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun HomeContent(navController: NavController) {
     val vm: HomeViewModel = remember { HomeViewModel() }
+    var lastFingerUser by remember { mutableStateOf("Loading...") }
+    val database = FirebaseDatabase.getInstance().reference
+    val myRef1 = database.child("NoahDoor").child("LastFingerUser")
 
+    // Fetch data from Firebase Realtime Database
+    val postListener = object : ValueEventListener {
+        override fun onDataChange(dataSnapshot: DataSnapshot) {
+            // Get string value from snapshot
+            lastFingerUser = dataSnapshot.getValue(String::class.java) ?: "No"
+        }
+
+        override fun onCancelled(databaseError: DatabaseError) {
+            // Handle error
+            lastFingerUser = "Failed to load data"
+        }
+    }
+    myRef1.addValueEventListener(postListener)
 
     Scaffold {
         Box(
@@ -50,7 +73,7 @@ fun HomeContent(navController: NavController) {
                         } else (vm.updateAddFingerPrint(false))
                 })
                 CardItem(
-                    name = "Delete Finger User ",
+                    name = "Delete Finger User",
                     onClick = {
                     if (it) {
                         vm.updateDeleteFingerUser(true)
@@ -83,7 +106,7 @@ fun HomeContent(navController: NavController) {
                             .padding(horizontal = 6.dp),
                         name = "Last User",
                         onClick = {},
-                        num = "1"
+                        num = lastFingerUser
                     )
                     CardSmallItem(
                         modifier = Modifier
@@ -95,10 +118,9 @@ fun HomeContent(navController: NavController) {
                         num = "200"
                     )
                 }
-                AboutUsButton(onClick = {
-                    navController.navigate("aboutUs")
-                }
-                )
+//                AboutUsButton(onClick = {
+//                    navController.navigate("aboutUs")
+//                }
             }
         }
     }
