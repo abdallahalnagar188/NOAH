@@ -1,4 +1,4 @@
-package com.example.noah.screen.home
+package com.example.noah.view_model
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
@@ -6,7 +6,6 @@ import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 
 class HomeViewModel : ViewModel() {
     private val database = FirebaseDatabase.getInstance()
@@ -41,7 +40,8 @@ class HomeViewModel : ViewModel() {
 
             }
 
-        })
+        }
+        )
     }
 
 
@@ -61,9 +61,9 @@ class HomeViewModel : ViewModel() {
         myRef.child("NoahDoor").child("Unlock").setValue(unlock)
     }
 
-//    fun readLastUser(){
-//        myRef.child("NoahDoor").child("Unlock").get().toString()
-//    }
+    fun readLastUser() {
+        myRef.child("NoahDoor").child("Unlock").get().toString()
+    }
 
 
 }
