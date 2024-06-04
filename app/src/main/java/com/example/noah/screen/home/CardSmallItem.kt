@@ -25,7 +25,7 @@ import com.example.noah.R
 fun CardSmallItem(
     modifier: Modifier,
     name: String,
-    onClick: () -> Unit = {},
+    onClick: @Composable () -> Unit = {},
     num:String
 
 ) {
@@ -38,7 +38,7 @@ fun CardSmallItem(
         elevation = CardDefaults.cardElevation(
             defaultElevation = 7.dp
         ), onClick = {
-            onClick()
+            onClick
         }
     ) {
         Row(
