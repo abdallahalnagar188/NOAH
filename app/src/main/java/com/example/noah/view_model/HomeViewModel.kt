@@ -16,10 +16,12 @@ class HomeViewModel : ViewModel() {
     private val database = FirebaseDatabase.getInstance()
     private val myRef = database.getReference()
 
-    private val _lastFingerUser = MutableStateFlow<String>("Loading...")
+    // add last finger user
+    private val _lastFingerUser = MutableStateFlow<String>("")
     val lastFingerUser: StateFlow<String> = _lastFingerUser
 
-    private val _doorFingerUsers = MutableStateFlow<String>("Loading...")
+    // add door finger users
+    private val _doorFingerUsers = MutableStateFlow<String>("")
     val doorFingerUsers :StateFlow<String> = _doorFingerUsers
 
     private val myRef1 = database.reference.child("NoahDoor").child("LastFingerUser")

@@ -30,21 +30,21 @@ fun HomeContent(navController: NavController) {
     val doorFingerUsers by vm.doorFingerUsers.collectAsState()
 
 
- /*   val database = FirebaseDatabase.getInstance().reference
-    val myRef1 = database.child("NoahDoor").child("LastFingerUser")
+    /*   val database = FirebaseDatabase.getInstance().reference
+       val myRef1 = database.child("NoahDoor").child("LastFingerUser")
 
-    // Fetch data from Firebase Realtime Database
-    myRef1.addValueEventListener(object : ValueEventListener {
-        override fun onDataChange(dataSnapshot: DataSnapshot) {
-            // Get string value from snapshot
-            lastFingerUser = dataSnapshot.getValue(String::class.java) ?: "No"
-        }
+       // Fetch data from Firebase Realtime Database
+       myRef1.addValueEventListener(object : ValueEventListener {
+           override fun onDataChange(dataSnapshot: DataSnapshot) {
+               // Get string value from snapshot
+               lastFingerUser = dataSnapshot.getValue(String::class.java) ?: "No"
+           }
 
-        override fun onCancelled(databaseError: DatabaseError) {
-            // Handle error
-            lastFingerUser = "Failed to load data"
-        }
-    })*/
+           override fun onCancelled(databaseError: DatabaseError) {
+               // Handle error
+               lastFingerUser = "Failed to load data"
+           }
+       })*/
 
 
     Scaffold {
@@ -69,28 +69,28 @@ fun HomeContent(navController: NavController) {
                         if (it) {
                             vm.updateAddFingerPrint(true)
                         } else (vm.updateAddFingerPrint(false))
-                })
+                    })
                 CardItem(
                     name = "Delete Finger User",
                     onClick = {
-                    if (it) {
-                        vm.updateDeleteFingerUser(true)
-                    } else (vm.updateDeleteFingerUser(false))
-                })
+                        if (it) {
+                            vm.updateDeleteFingerUser(true)
+                        } else (vm.updateDeleteFingerUser(false))
+                    })
                 CardItem(
                     name = "Finger Mode",
                     onClick = {
-                    if (it) {
-                        vm.updateFingerMode(true)
-                    } else (vm.updateFingerMode(false))
-                })
+                        if (it) {
+                            vm.updateFingerMode(true)
+                        } else (vm.updateFingerMode(false))
+                    })
                 CardItem(
                     name = "Un Lock",
                     onClick = {
-                    if (it) {
-                        vm.updateUnLock(true)
-                    } else (vm.updateUnLock(false))
-                })
+                        if (it) {
+                            vm.updateUnLock(true)
+                        } else (vm.updateUnLock(false))
+                    })
 
                 Row(
                     modifier = Modifier
@@ -103,7 +103,7 @@ fun HomeContent(navController: NavController) {
                             .height(60.dp)
                             .padding(horizontal = 6.dp),
                         name = "Last User",
-                        onClick = {  },
+                        onClick = { },
                         num = lastFingerUser
                     )
                     CardSmallItem(
@@ -124,4 +124,3 @@ fun HomeContent(navController: NavController) {
     }
 
 }
-
