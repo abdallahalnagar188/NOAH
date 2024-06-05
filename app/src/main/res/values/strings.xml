@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">NOAH</string>
     <string name="title_activity_splash" translatable="false">SplashActivity</string>
+    <string name="users">Users</string>
+    <string name="lastUser">Last User</string>
+    <string name="addFingerPrint">Add Finger</string>
+    <string name="deleteFingerUsers">Delete Users</string>
+    <string name="fingerMode">Finger Mode</string>
+    <string name="unLock">Un Lock</string>
 </resources>

@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">NOAH</string>
+    <string name="users">المستخدمين</string>
+    <string name="lastUser">اخر مستخدم</string>
+    <string name="addFingerPrint">اضافة بصمه</string>
+    <string name="deleteFingerUsers">حذف المستخدمين</string>
+    <string name="fingerMode">وضع البصمه</string>
+    <string name="unLock">Un Lock</string>
 </resources>

@@ -10,7 +10,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -18,7 +18,11 @@ import com.example.noah.R
 
 @Composable
 fun SplashContent() {
-    Box(modifier = Modifier.fillMaxSize().background(Color.DarkGray)) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(colorResource(id = R.color.coffie2))
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxSize(),
@@ -26,9 +30,14 @@ fun SplashContent() {
             verticalArrangement = Arrangement.Center
         ) {
             Image(
-                painter = painterResource(id = R.drawable.png1),
+                painter = painterResource(id = R.drawable.iconapp),
                 contentDescription = "Splash Logo",
-                modifier = Modifier.size(220.dp)
+                modifier = Modifier.size(200.dp)
+            )
+            Image(
+                painter = painterResource(id = R.drawable.noahimage),
+                contentDescription = "Noah Image",
+                modifier = Modifier
             )
         }
     }

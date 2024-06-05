@@ -29,7 +29,7 @@ fun CardItem(name: String, onClick: (Boolean) -> Unit = {}) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .height(90.dp)
+            .height(100.dp)
             .padding(12.dp),
         colors = CardDefaults.cardColors(
             containerColor = colorResource(id = R.color.color2_app)
