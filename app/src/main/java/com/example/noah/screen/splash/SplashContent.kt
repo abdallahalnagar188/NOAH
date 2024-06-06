@@ -21,7 +21,7 @@ fun SplashContent() {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(colorResource(id = R.color.coffie2))
+            .background(colorResource(id = R.color.green))
     ) {
         Column(
             modifier = Modifier

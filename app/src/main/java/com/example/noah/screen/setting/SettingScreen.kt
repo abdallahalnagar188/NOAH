@@ -20,8 +20,7 @@ fun SettingsScreenContent(navController: NavController) {
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = "About Us Screen")
-
+            Text(text = "Settings Screen")
         }
     }
 }

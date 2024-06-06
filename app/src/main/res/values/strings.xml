@@ -5,6 +5,7 @@
     <string name="lastUser">Last User</string>
     <string name="addFingerPrint">Add Finger</string>
     <string name="deleteFingerUsers">Delete Users</string>
-    <string name="fingerMode">Finger Mode</string>
-    <string name="unLock">Un Lock</string>
+    <string name="fingerMode">Finger M</string>
+    <string name="unLock">Unlock</string>
+    <string name="wifiOrder">Wifi Order</string>
 </resources>

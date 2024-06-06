@@ -1,6 +1,7 @@
 package com.example.noah.screen.home
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -11,12 +12,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.paint
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -28,34 +28,14 @@ import com.example.noah.view_model.HomeViewModel
 @Composable
 fun HomeContent(navController: NavController) {
     val vm: HomeViewModel = remember { HomeViewModel() }
-
-
-    /*   val database = FirebaseDatabase.getInstance().reference
-       val myRef1 = database.child("NoahDoor").child("LastFingerUser")
-
-       // Fetch data from Firebase Realtime Database
-       myRef1.addValueEventListener(object : ValueEventListener {
-           override fun onDataChange(dataSnapshot: DataSnapshot) {
-               // Get string value from snapshot
-               lastFingerUser = dataSnapshot.getValue(String::class.java) ?: "No"
-           }
-
-           override fun onCancelled(databaseError: DatabaseError) {
-               // Handle error
-               lastFingerUser = "Failed to load data"
-           }
-       })*/
+    val isConnected = remember { mutableStateOf(false) }
 
 
     Scaffold {
-
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .paint(
-                    painterResource(id = R.drawable.bg),
-                    contentScale = ContentScale.FillBounds
-                ),
+                .background(color = colorResource(id = R.color.green)),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             HomeTopBar(navController)
@@ -67,10 +47,24 @@ fun HomeContent(navController: NavController) {
                     .fillMaxWidth(0.85f)
                     .padding(top = 26.dp)
             ) {
-                ButtonDef(icon = R.drawable.ic_finger)
-                ButtonDef(icon = R.drawable.ic_delete)
+                ButtonDef(icon = R.drawable.ic_finger,
+                    stringResource(id = R.string.addFingerPrint),
+                    onClick = {
+                        if (it) {
+                            vm.updateAddFingerPrint(true)
+                        } else (vm.updateAddFingerPrint(false))
+                    })
+                ButtonDef(
+                    icon = R.drawable.ic_delete,
+                    stringResource(id = R.string.deleteFingerUsers),
+                    onClick = {
+                        if (it) {
+                            vm.updateDeleteFingerUser(true)
+                        } else (vm.updateDeleteFingerUser(false))
+                    }
+                )
             }
-            Spacer(modifier = Modifier.height(50.dp))
+            Spacer(modifier = Modifier.height(10.dp))
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -78,10 +72,24 @@ fun HomeContent(navController: NavController) {
                     .fillMaxWidth(0.75f)
                     .padding(top = 4.dp)
             ) {
-                ButtonDef(icon = R.drawable.unlock)
-                ButtonDef(icon = R.drawable.fingerprint)
+                ButtonDef(
+                    icon = R.drawable.unlock,
+                    stringResource(id = R.string.unLock),
+                    onClick = {
+                        if (it) {
+                            vm.updateUnLock(true)
+                        } else (vm.updateUnLock(false))
+                    })
+                ButtonDef(
+                    icon = R.drawable.fingerprint,
+                    stringResource(id = R.string.fingerMode),
+                    onClick = {
+                        if (it) {
+                            vm.updateFingerMode(true)
+                        } else (vm.updateFingerMode(false))
+                    })
             }
-            Spacer(modifier = Modifier.height(30.dp))
+            Spacer(modifier = Modifier.height(10.dp))
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center,
@@ -89,7 +97,12 @@ fun HomeContent(navController: NavController) {
                     .fillMaxWidth()
                     .padding(top = 4.dp)
             ) {
-                ButtonDef(icon = R.drawable.wifi)
+                ButtonDef(icon = R.drawable.wifi, stringResource(id = R.string.wifiOrder),
+                    onClick = {
+                        if (it) {
+                            vm.updateWifiOrder(true)
+                        } else (vm.updateWifiOrder(false))
+                    })
 
             }
 

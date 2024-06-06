@@ -1,4 +1,4 @@
-package com.example.noah.screen.home
+package com.example.noah.screen.buttons
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row

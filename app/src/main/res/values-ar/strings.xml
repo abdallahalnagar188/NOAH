@@ -6,5 +6,6 @@
     <string name="addFingerPrint">اضافة بصمه</string>
     <string name="deleteFingerUsers">حذف المستخدمين</string>
     <string name="fingerMode">وضع البصمه</string>
-    <string name="unLock">Un Lock</string>
+    <string name="unLock">قفل</string>
+    <string name="wifiOrder">اتصال بالواي فاي</string>
 </resources>
