@@ -1,4 +1,4 @@
-package com.example.noah.screen.home
+package com.example.noah.screen.cards
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,6 +23,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.noah.R
 
+
+// not used
 @Composable
 fun CardItem(name: String, onClick: (Boolean) -> Unit = {}) {
 

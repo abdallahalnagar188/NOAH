@@ -68,10 +68,7 @@ fun HomeTopBar(navController: NavController) {
                         id = R.color.coffie
                     )
                 )
-
             }
-
         }
     }
-
 }

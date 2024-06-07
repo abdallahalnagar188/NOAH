@@ -26,6 +26,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.noah.R
 
+
+// not used
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AboutUsButton(onClick: () -> Unit) {
