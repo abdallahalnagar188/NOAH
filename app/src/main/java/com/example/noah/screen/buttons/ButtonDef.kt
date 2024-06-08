@@ -26,8 +26,13 @@ import com.example.noah.R
 
 
 @Composable
-fun ButtonDef(icon: Int, namOfButton: String, onClick: (Boolean) -> Unit = {}) {
-    val isSelectedState = rememberSaveable{ mutableStateOf(false) }
+fun ButtonDef(
+    icon: Int,
+    namOfButton: String,
+    onClick: (Boolean) -> Unit = {},
+    boolean: Boolean = false
+) {
+    val isSelectedState = rememberSaveable { mutableStateOf(boolean) }
     val bg = if (isSelectedState.value) {
         colorResource(id = R.color.coffie)
     } else {

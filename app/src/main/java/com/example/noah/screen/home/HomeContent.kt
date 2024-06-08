@@ -18,6 +18,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -26,18 +27,21 @@ import com.example.noah.R
 import com.example.noah.screen.buttons.ButtonDef
 import com.example.noah.screen.cards.CardDoor
 import com.example.noah.view_model.HomeViewModel
+import com.example.noah.view_model.Repo
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun HomeContent(navController: NavController) {
     val vm: HomeViewModel = remember { HomeViewModel() }
     val isConnected = remember { mutableStateOf(false) }
+    val activity = LocalContext.current as MainActivity
 
 
     Scaffold {
         Column(
             modifier = Modifier
-                .fillMaxSize().verticalScroll(rememberScrollState())
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
                 .background(color = colorResource(id = R.color.green)),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -50,21 +54,35 @@ fun HomeContent(navController: NavController) {
                     .fillMaxWidth(0.85f)
                     .padding(top = 26.dp)
             ) {
-                ButtonDef(icon = R.drawable.ic_finger,
+                ButtonDef(
+                    icon = R.drawable.ic_finger,
                     stringResource(id = R.string.addFingerPrint),
                     onClick = {
+
                         if (it) {
+                            Repo(activity).addFingerToShard(true)
                             vm.updateAddFingerPrint(true)
-                        } else (vm.updateAddFingerPrint(false))
-                    })
+                        } else {
+                            Repo(activity).addFingerToShard(false)
+                            vm.updateAddFingerPrint(false)
+                        }
+
+                    }, boolean = Repo(activity).get("addFinger")
+                )
                 ButtonDef(
                     icon = R.drawable.ic_delete,
                     stringResource(id = R.string.deleteFingerUsers),
                     onClick = {
+
                         if (it) {
+                            Repo(activity).deleteUsersToShard(true)
                             vm.updateDeleteFingerUser(true)
-                        } else (vm.updateDeleteFingerUser(false))
-                    }
+                        } else {
+                            Repo(activity).deleteUsersToShard(false)
+                            vm.updateDeleteFingerUser(false)
+                        }
+
+                    }, boolean = Repo(activity).get("deleteUsers")
                 )
             }
             Spacer(modifier = Modifier.height(10.dp))
@@ -80,17 +98,27 @@ fun HomeContent(navController: NavController) {
                     stringResource(id = R.string.unLock),
                     onClick = {
                         if (it) {
+                            Repo(activity).unlockToShard(true)
                             vm.updateUnLock(true)
-                        } else (vm.updateUnLock(false))
-                    })
+                        } else {
+                            Repo(activity).unlockToShard(false)
+                            vm.updateUnLock(false)
+                        }
+                    }, boolean = Repo(activity).get("unlock")
+                )
                 ButtonDef(
                     icon = R.drawable.fingerprint,
                     stringResource(id = R.string.fingerMode),
                     onClick = {
                         if (it) {
+                            Repo(activity).fingerModeToShard(true)
                             vm.updateFingerMode(true)
-                        } else (vm.updateFingerMode(false))
-                    })
+                        } else {
+                            Repo(activity).fingerModeToShard(false)
+                            vm.updateFingerMode(false)
+                        }
+                    }, boolean = Repo(activity).get("fingerMode")
+                )
             }
             Spacer(modifier = Modifier.height(10.dp))
             Row(
@@ -103,51 +131,15 @@ fun HomeContent(navController: NavController) {
                 ButtonDef(icon = R.drawable.wifi, stringResource(id = R.string.wifiOrder),
                     onClick = {
                         if (it) {
+                            Repo(activity).wifiOrderToShard(true)
                             vm.updateWifiOrder(true)
-                        } else (vm.updateWifiOrder(false))
-                    })
+                        } else {
+                            Repo(activity).wifiOrderToShard(false)
+                            vm.updateWifiOrder(false)
+                        }
+                    }, boolean = Repo(activity).get("wifiOrder"))
 
             }
-
-
-
-/*            CardItem(name = "Wifi Order", onClick = {
-                if (it) {
-                    vm.updateWifiOrder(true)
-                } else (vm.updateWifiOrder(false))
-            })
-            CardItem(
-                name = stringResource(id = R.string.addFingerPrint),
-                onClick = {
-                    if (it) {
-                        vm.updateAddFingerPrint(true)
-                    } else (vm.updateAddFingerPrint(false))
-                })
-            CardItem(
-                name = stringResource(id = R.string.deleteFingerUsers),
-                onClick = {
-                    if (it) {
-                        vm.updateDeleteFingerUser(true)
-                    } else (vm.updateDeleteFingerUser(false))
-                })
-            CardItem(
-                name = stringResource(id = R.string.fingerMode),
-                onClick = {
-                    if (it) {
-                        vm.updateFingerMode(true)
-                    } else (vm.updateFingerMode(false))
-                })
-            CardItem(
-                name = stringResource(id = R.string.unLock),
-                onClick = {
-                    if (it) {
-                        vm.updateUnLock(true)
-                    } else (vm.updateUnLock(false))
-                })*/
-
-//            AboutUsButton(onClick = {
-//                navController.navigate("aboutUs")
-//            })
         }
     }
 }
