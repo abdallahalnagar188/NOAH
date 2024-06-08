@@ -2,12 +2,12 @@ package com.example.noah.view_model
 
 import android.app.Activity
 import android.content.Context
-import androidx.core.content.ContextCompat
-import com.example.noah.screen.home.MainActivity
 
 class Repo (private val activity: Activity){
     val prfrs = activity.getSharedPreferences("NoahDoor",Context.MODE_PRIVATE)
     val editor = prfrs.edit()
+
+
     fun addFingerToShard(addFingerPrint:Boolean){
         editor.putBoolean("addFinger",addFingerPrint)
         editor.apply()
@@ -30,8 +30,6 @@ class Repo (private val activity: Activity){
         editor.putBoolean("wifiOrder",wifiOrder)
         editor.apply()
     }
-
-
 
     fun get (key:String):Boolean{
         return  prfrs.getBoolean(key,false)

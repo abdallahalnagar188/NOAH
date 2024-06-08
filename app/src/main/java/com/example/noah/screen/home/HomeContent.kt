@@ -16,10 +16,12 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -33,8 +35,15 @@ import com.example.noah.view_model.Repo
 @Composable
 fun HomeContent(navController: NavController) {
     val vm: HomeViewModel = remember { HomeViewModel() }
-    val isConnected = remember { mutableStateOf(false) }
     val activity = LocalContext.current as MainActivity
+    val isConnected = rememberSaveable { mutableStateOf(false) }
+
+    val bg = if (isConnected.value) {
+        painterResource(id = R.drawable.iconapp)
+    } else {
+        painterResource(id = R.drawable.iconapptwo)
+    }
+
 
 
     Scaffold {
@@ -46,7 +55,7 @@ fun HomeContent(navController: NavController) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             HomeTopBar(navController)
-            CardDoor()
+            CardDoor(painter = bg)
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -58,7 +67,6 @@ fun HomeContent(navController: NavController) {
                     icon = R.drawable.ic_finger,
                     stringResource(id = R.string.addFingerPrint),
                     onClick = {
-
                         if (it) {
                             Repo(activity).addFingerToShard(true)
                             vm.updateAddFingerPrint(true)
@@ -128,7 +136,9 @@ fun HomeContent(navController: NavController) {
                     .fillMaxWidth()
                     .padding(top = 4.dp)
             ) {
-                ButtonDef(icon = R.drawable.wifi, stringResource(id = R.string.wifiOrder),
+                ButtonDef(
+                    icon = R.drawable.wifi,
+                    stringResource(id = R.string.wifiOrder),
                     onClick = {
                         if (it) {
                             Repo(activity).wifiOrderToShard(true)
@@ -137,6 +147,7 @@ fun HomeContent(navController: NavController) {
                             Repo(activity).wifiOrderToShard(false)
                             vm.updateWifiOrder(false)
                         }
+                        isConnected.value = !isConnected.value
                     }, boolean = Repo(activity).get("wifiOrder"))
 
             }

@@ -22,6 +22,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -35,7 +36,7 @@ import com.example.noah.R
 import com.example.noah.view_model.HomeViewModel
 
 @Composable
-fun CardDoor() {
+fun CardDoor(painter: Painter) {
     val vm: HomeViewModel = remember { HomeViewModel() }
     val lastFingerUser by vm.lastFingerUser.collectAsState()
     val doorFingerUsers by vm.doorFingerUsers.collectAsState()
@@ -55,7 +56,7 @@ fun CardDoor() {
         ) {
 
             Image(
-                painter = (painterResource(id = R.drawable.iconapp)),
+                painter = painter,
                 contentDescription = "Image Finger Door",
                 contentScale = ContentScale.FillBounds,
                 modifier = Modifier.fillMaxWidth(0.5f).fillMaxHeight(0.5f)
