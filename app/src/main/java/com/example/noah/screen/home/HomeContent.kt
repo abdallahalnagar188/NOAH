@@ -36,7 +36,7 @@ import com.example.noah.view_model.Repo
 fun HomeContent(navController: NavController) {
     val vm: HomeViewModel = remember { HomeViewModel() }
     val activity = LocalContext.current as MainActivity
-    val isConnected = rememberSaveable { mutableStateOf(false) }
+    val isConnected = rememberSaveable { mutableStateOf(true) }
 
     val bg = if (isConnected.value) {
         painterResource(id = R.drawable.iconapp)
