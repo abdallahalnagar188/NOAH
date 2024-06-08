@@ -1,6 +1,8 @@
 package com.example.noah.view_model
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.database.ChildEventListener
@@ -24,13 +26,19 @@ class HomeViewModel : ViewModel() {
     private val _doorFingerUsers = MutableStateFlow<String>("")
     val doorFingerUsers :StateFlow<String> = _doorFingerUsers
 
+    //add wifi order
+    private val _booleanValue = MutableLiveData<Boolean>()
+    val booleanValue: LiveData<Boolean> get() = _booleanValue
+
     private val myRef1 = database.reference.child("NoahDoor").child("LastFingerUser")
     private val myRef2 = database.reference.child("NoahDoor").child("DoorFingerUsers")
+    private val myRefWifi = database.reference.child("NoahDoor").child("WiFiOrder")
 
     init {
         setupRealTimeListener()
         readLastFingerUser()
         readDoorFingerUsers()
+        fetchBooleanValue()
     }
 
     private fun setupRealTimeListener() {
@@ -104,5 +112,17 @@ class HomeViewModel : ViewModel() {
                 }
             })
         }
+    }
+
+    private fun fetchBooleanValue() {
+        myRefWifi.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                _booleanValue.value = dataSnapshot.getValue(Boolean::class.java) ?: false
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                // Handle possible errors.
+            }
+        })
     }
 }

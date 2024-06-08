@@ -1,7 +1,6 @@
 package com.example.noah.screen.home
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,13 +13,16 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.paint
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -36,8 +38,10 @@ import com.example.noah.view_model.Repo
 fun HomeContent(navController: NavController) {
     val vm: HomeViewModel = remember { HomeViewModel() }
     val activity = LocalContext.current as MainActivity
-    val isConnected = rememberSaveable { mutableStateOf(true) }
 
+    val booleanValue by vm.booleanValue.observeAsState(false)
+
+    val isConnected = rememberSaveable { mutableStateOf(true) }
     val bg = if (isConnected.value) {
         painterResource(id = R.drawable.iconapp)
     } else {
@@ -51,7 +55,10 @@ fun HomeContent(navController: NavController) {
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
-                .background(color = colorResource(id = R.color.green)),
+                .paint(
+                    painter = painterResource(id = R.drawable.bgcolor),
+                    contentScale = ContentScale.FillBounds
+                ),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             HomeTopBar(navController)
@@ -67,14 +74,15 @@ fun HomeContent(navController: NavController) {
                     icon = R.drawable.ic_finger,
                     stringResource(id = R.string.addFingerPrint),
                     onClick = {
-                        if (it) {
-                            Repo(activity).addFingerToShard(true)
-                            vm.updateAddFingerPrint(true)
-                        } else {
-                            Repo(activity).addFingerToShard(false)
-                            vm.updateAddFingerPrint(false)
+                        if (!booleanValue){
+                            if (it) {
+                                Repo(activity).addFingerToShard(true)
+                                vm.updateAddFingerPrint(true)
+                            } else {
+                                Repo(activity).addFingerToShard(false)
+                                vm.updateAddFingerPrint(false)
+                            }
                         }
-
                     }, boolean = Repo(activity).get("addFinger")
                 )
                 ButtonDef(
@@ -149,7 +157,6 @@ fun HomeContent(navController: NavController) {
                         }
                         isConnected.value = !isConnected.value
                     }, boolean = Repo(activity).get("wifiOrder"))
-
             }
         }
     }
