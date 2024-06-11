@@ -13,6 +13,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -85,7 +86,8 @@ fun PasswordScreen(navController: NavController) {
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 12.dp, vertical = 6.dp),
-            shape = RoundedCornerShape(25.dp)
+            shape = RoundedCornerShape(25.dp), colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = colorResource(id = R.color.coffie))
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -99,10 +101,13 @@ fun PasswordScreen(navController: NavController) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 12.dp, vertical = 6.dp),
-                shape = RoundedCornerShape(25.dp)
+                shape = RoundedCornerShape(25.dp),
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = (colorResource(id = R.color.coffie))
+                )
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(60.dp))
         }
 
         Button(modifier = Modifier
@@ -151,7 +156,7 @@ fun PasswordScreen(navController: NavController) {
             Spacer(modifier = Modifier.height(16.dp))
             Text(
                 errorMessage,
-                color = Color.Black,
+                color = Color.White,
                 fontSize = 20.sp,
                 modifier = Modifier.padding(8.dp)
             )
