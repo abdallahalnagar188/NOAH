@@ -1,10 +1,11 @@
 package com.example.noah.screen.buttons
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -14,6 +15,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -33,17 +35,6 @@ fun ButtonDef(
     boolean: Boolean = false
 ) {
     val isSelectedState = rememberSaveable { mutableStateOf(boolean) }
-    val bg = if (isSelectedState.value) {
-        colorResource(id = R.color.coffie)
-    } else {
-        colorResource(id = R.color.coffie2)
-    }
-
-    val tint = if (isSelectedState.value) {
-        colorResource(id = R.color.coffie2)
-    } else {
-        colorResource(id = R.color.coffie)
-    }
     Column(
         verticalArrangement = Arrangement.SpaceEvenly,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -53,17 +44,22 @@ fun ButtonDef(
                 isSelectedState.value = !isSelectedState.value
                 onClick(isSelectedState.value)
             },
-            shape = RoundedCornerShape(50),
-            modifier = Modifier.size(86.dp),
+            modifier = Modifier
+                .size(86.dp)
+                .border(
+                    2.5.dp,
+                    color = colorResource(id = R.color.coffie2),
+                    CircleShape
+                ).shadow(elevation = 12.dp, shape = CircleShape),
             colors = ButtonDefaults.buttonColors(
-                bg,
+                containerColor = colorResource(id = R.color.coffie),
                 contentColor = Color.DarkGray // Icon color
             )
         ) {
             Icon(
                 painter = painterResource(id = icon),
                 contentDescription = "Icon",
-                modifier = Modifier, tint = tint
+                modifier = Modifier, tint = colorResource(id = R.color.coffie2)
             )
         }
         Text(

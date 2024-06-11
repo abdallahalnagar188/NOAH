@@ -38,17 +38,17 @@ import com.example.noah.view_model.Repo
 fun HomeContent(navController: NavController) {
     val vm: HomeViewModel = remember { HomeViewModel() }
     val activity = LocalContext.current as MainActivity
+    val wifiOrder by vm.wifiOrder.observeAsState(false)
 
-    val booleanValue by vm.booleanValue.observeAsState(false)
+//    val booleanValue by vm.booleanValue.observeAsState(false)
+//    val addFingerUser by vm.addFingerValue.observeAsState(false)
 
-    val isConnected = rememberSaveable { mutableStateOf(true) }
-    val bg = if (isConnected.value) {
-        painterResource(id = R.drawable.iconapp)
-    } else {
+    val isConnected = rememberSaveable { mutableStateOf(false) }
+    val bg = if (wifiOrder) {
         painterResource(id = R.drawable.iconapptwo)
+    } else {
+        painterResource(id = R.drawable.iconapp)
     }
-
-
 
     Scaffold {
         Column(
@@ -62,7 +62,12 @@ fun HomeContent(navController: NavController) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             HomeTopBar(navController)
-            CardDoor(painter = bg)
+            CardDoor(painter = bg,
+                onTClick = {
+                    Repo(activity).wifiOrderToShard(true)
+                    vm.updateWifiOrder(true)
+                })
+            Spacer(modifier = Modifier.height(30.dp))
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -74,34 +79,22 @@ fun HomeContent(navController: NavController) {
                     icon = R.drawable.ic_finger,
                     stringResource(id = R.string.addFingerPrint),
                     onClick = {
-                        if (!booleanValue){
-                            if (it) {
-                                Repo(activity).addFingerToShard(true)
-                                vm.updateAddFingerPrint(true)
-                            } else {
-                                Repo(activity).addFingerToShard(false)
-                                vm.updateAddFingerPrint(false)
-                            }
-                        }
-                    }, boolean = Repo(activity).get("addFinger")
+                        Repo(activity).addFingerToShard(true)
+                        vm.updateWifiOrder(true)
+                        vm.observeWiFiOrderAndUpdateAddFingerUser()
+                    }
                 )
                 ButtonDef(
                     icon = R.drawable.ic_delete,
                     stringResource(id = R.string.deleteFingerUsers),
                     onClick = {
-
-                        if (it) {
-                            Repo(activity).deleteUsersToShard(true)
-                            vm.updateDeleteFingerUser(true)
-                        } else {
-                            Repo(activity).deleteUsersToShard(false)
-                            vm.updateDeleteFingerUser(false)
-                        }
-
-                    }, boolean = Repo(activity).get("deleteUsers")
+                        Repo(activity).deleteUsersToShard(true)
+                        vm.updateWifiOrder(true)
+                        vm.observeWiFiOrderAndUpdateDeleteFingerUser()
+                    }
                 )
             }
-            Spacer(modifier = Modifier.height(10.dp))
+            Spacer(modifier = Modifier.height(30.dp))
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -113,51 +106,35 @@ fun HomeContent(navController: NavController) {
                     icon = R.drawable.unlock,
                     stringResource(id = R.string.unLock),
                     onClick = {
-                        if (it) {
-                            Repo(activity).unlockToShard(true)
-                            vm.updateUnLock(true)
-                        } else {
-                            Repo(activity).unlockToShard(false)
-                            vm.updateUnLock(false)
-                        }
-                    }, boolean = Repo(activity).get("unlock")
+                        Repo(activity).unlockToShard(true)
+                        vm.updateWifiOrder(true)
+                        vm.observeWiFiOrderAndUpdateUnlock()
+                    }
                 )
                 ButtonDef(
                     icon = R.drawable.fingerprint,
                     stringResource(id = R.string.fingerMode),
                     onClick = {
-                        if (it) {
-                            Repo(activity).fingerModeToShard(true)
-                            vm.updateFingerMode(true)
-                        } else {
-                            Repo(activity).fingerModeToShard(false)
-                            vm.updateFingerMode(false)
-                        }
-                    }, boolean = Repo(activity).get("fingerMode")
+                        Repo(activity).fingerModeToShard(true)
+                        vm.updateWifiOrder(true)
+                        vm.observeWiFiOrderAndUpdateFingerMode()
+                    }
                 )
             }
-            Spacer(modifier = Modifier.height(10.dp))
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 4.dp)
-            ) {
-                ButtonDef(
-                    icon = R.drawable.wifi,
-                    stringResource(id = R.string.wifiOrder),
-                    onClick = {
-                        if (it) {
-                            Repo(activity).wifiOrderToShard(true)
-                            vm.updateWifiOrder(true)
-                        } else {
-                            Repo(activity).wifiOrderToShard(false)
-                            vm.updateWifiOrder(false)
-                        }
-                        isConnected.value = !isConnected.value
-                    }, boolean = Repo(activity).get("wifiOrder"))
-            }
+//            Spacer(modifier = Modifier.height(10.dp))
+//            Row(
+//                verticalAlignment = Alignment.CenterVertically,
+//                horizontalArrangement = Arrangement.Center,
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .padding(top = 4.dp)
+//            ) {
+//                ButtonDef(
+//                    icon = R.drawable.wifi,
+//                    stringResource(id = R.string.wifiOrder),
+//                    onClick = {}
+//                )
+//            }
         }
     }
 }
