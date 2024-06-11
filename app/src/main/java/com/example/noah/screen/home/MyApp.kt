@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.noah.screen.aboutUs.AboutUsScree
+import com.example.noah.screen.aboutUs.AboutUsScreen
 import com.example.noah.screen.password.PasswordScreen
 import com.example.noah.screen.setting.SettingScreen
 import com.example.noah.screen.splash.SplashScreen
@@ -17,7 +17,7 @@ fun MyApp() {
         composable("splash") { SplashScreen(navController) }
         composable("password") { PasswordScreen(navController) }
         composable("home") { HomeContent(navController) }
-        composable("aboutUs") { AboutUsScree(navController) }
+        composable("aboutUs") { AboutUsScreen(navController) }
         composable("settings") { SettingScreen(navController) }
     }
 }

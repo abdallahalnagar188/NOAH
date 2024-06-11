@@ -2,10 +2,11 @@ package com.example.noah.view_model
 
 import android.app.Activity
 import android.content.Context
+import android.content.SharedPreferences
 
-class Repo (private val activity: Activity){
-    val prfrs = activity.getSharedPreferences("NoahDoor",Context.MODE_PRIVATE)
-    val editor = prfrs.edit()
+class Repo (activity: Activity){
+    private val sharedPreferences: SharedPreferences = activity.getSharedPreferences("NoahDoor",Context.MODE_PRIVATE)
+    val editor = sharedPreferences.edit()
 
 
     fun addFingerToShard(addFingerPrint:Boolean){
@@ -32,6 +33,6 @@ class Repo (private val activity: Activity){
     }
 
     fun get (key:String):Boolean{
-        return  prfrs.getBoolean(key,false)
+        return  sharedPreferences.getBoolean(key,false)
     }
 }

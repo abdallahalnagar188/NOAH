@@ -162,6 +162,7 @@ class HomeViewModel : ViewModel() {
                 if (!wifiOrder) {
                     updateAddFingerPrint(true)
                 }
+
             }
 
             override fun onCancelled(databaseError: DatabaseError) {

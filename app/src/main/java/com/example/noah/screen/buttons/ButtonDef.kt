@@ -2,12 +2,14 @@ package com.example.noah.screen.buttons
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -32,45 +34,52 @@ fun ButtonDef(
     icon: Int,
     namOfButton: String,
     onClick: (Boolean) -> Unit = {},
-    boolean: Boolean = false
+    boolean: Boolean = false,
 ) {
     val isSelectedState = rememberSaveable { mutableStateOf(boolean) }
     Column(
         verticalArrangement = Arrangement.SpaceEvenly,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Button(
-            onClick = {
-                isSelectedState.value = !isSelectedState.value
-                onClick(isSelectedState.value)
-            },
-            modifier = Modifier
-                .size(86.dp)
-                .border(
-                    2.5.dp,
-                    color = colorResource(id = R.color.coffie2),
-                    CircleShape
-                ).shadow(elevation = 12.dp, shape = CircleShape),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = colorResource(id = R.color.coffie),
-                contentColor = Color.DarkGray // Icon color
-            )
-        ) {
-            Icon(
-                painter = painterResource(id = icon),
-                contentDescription = "Icon",
-                modifier = Modifier, tint = colorResource(id = R.color.coffie2)
-            )
+        Box(contentAlignment = Alignment.Center) {
+            Button(
+                onClick = {
+                    isSelectedState.value = !isSelectedState.value
+                    onClick(isSelectedState.value)
+                },
+                modifier = Modifier
+                    .size(86.dp)
+                    .border(
+                        2.5.dp,
+                        color = colorResource(id = R.color.coffie2),
+                        CircleShape
+                    )
+                    .shadow(elevation = 12.dp, shape = CircleShape),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = colorResource(id = R.color.coffie),
+                    contentColor = Color.DarkGray // Icon color
+                )
+            ) {
+                Icon(
+                    painter = painterResource(id = icon),
+                    contentDescription = "Icon",
+                    modifier = Modifier,
+                    tint = colorResource(id = R.color.coffie2)
+                )
+            }
         }
         Text(
             text = namOfButton,
+            modifier = Modifier
+                .padding(top = 4.dp)
+                .align(Alignment.CenterHorizontally),
             fontSize = 18.sp,
             fontWeight = FontWeight.Normal,
             fontFamily = FontFamily.Serif,
             style = TextStyle(color = Color.White),
-            modifier = Modifier
-                .padding(top = 4.dp)
-                .align(Alignment.CenterHorizontally)
-        )
+
+            )
     }
 }
+
+

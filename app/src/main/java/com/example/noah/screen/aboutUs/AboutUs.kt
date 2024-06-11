@@ -13,7 +13,7 @@ import androidx.navigation.NavController
 import com.example.noah.view_model.HomeViewModel
 
 @Composable
-fun AboutUsScree(navController: NavController) {
+fun AboutUsScreen(navController: NavController) {
 
     AboutUsContent(navController = navController)
 

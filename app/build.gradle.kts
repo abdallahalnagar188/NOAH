@@ -77,6 +77,7 @@ dependencies {
     implementation ("com.google.zxing:core:3.4.1")
     implementation ("com.journeyapps:zxing-android-embedded:4.1.0")
 
+
     //view model
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose-android:2.8.0-rc01")
 

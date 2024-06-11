@@ -15,9 +15,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
@@ -39,11 +37,6 @@ fun HomeContent(navController: NavController) {
     val vm: HomeViewModel = remember { HomeViewModel() }
     val activity = LocalContext.current as MainActivity
     val wifiOrder by vm.wifiOrder.observeAsState(false)
-
-//    val booleanValue by vm.booleanValue.observeAsState(false)
-//    val addFingerUser by vm.addFingerValue.observeAsState(false)
-
-    val isConnected = rememberSaveable { mutableStateOf(false) }
     val bg = if (wifiOrder) {
         painterResource(id = R.drawable.iconapptwo)
     } else {
@@ -77,7 +70,7 @@ fun HomeContent(navController: NavController) {
             ) {
                 ButtonDef(
                     icon = R.drawable.ic_finger,
-                    stringResource(id = R.string.addFingerPrint),
+                    namOfButton = stringResource(id = R.string.addFingerPrint),
                     onClick = {
                         Repo(activity).addFingerToShard(true)
                         vm.updateWifiOrder(true)
@@ -86,12 +79,13 @@ fun HomeContent(navController: NavController) {
                 )
                 ButtonDef(
                     icon = R.drawable.ic_delete,
-                    stringResource(id = R.string.deleteFingerUsers),
+                    namOfButton = stringResource(id = R.string.deleteFingerUsers),
                     onClick = {
                         Repo(activity).deleteUsersToShard(true)
                         vm.updateWifiOrder(true)
                         vm.observeWiFiOrderAndUpdateDeleteFingerUser()
                     }
+
                 )
             }
             Spacer(modifier = Modifier.height(30.dp))
@@ -104,16 +98,17 @@ fun HomeContent(navController: NavController) {
             ) {
                 ButtonDef(
                     icon = R.drawable.unlock,
-                    stringResource(id = R.string.unLock),
+                    namOfButton = stringResource(id = R.string.unLock),
                     onClick = {
+
                         Repo(activity).unlockToShard(true)
                         vm.updateWifiOrder(true)
                         vm.observeWiFiOrderAndUpdateUnlock()
-                    }
+                    },
                 )
                 ButtonDef(
                     icon = R.drawable.fingerprint,
-                    stringResource(id = R.string.fingerMode),
+                    namOfButton = stringResource(id = R.string.fingerMode),
                     onClick = {
                         Repo(activity).fingerModeToShard(true)
                         vm.updateWifiOrder(true)
@@ -121,20 +116,6 @@ fun HomeContent(navController: NavController) {
                     }
                 )
             }
-//            Spacer(modifier = Modifier.height(10.dp))
-//            Row(
-//                verticalAlignment = Alignment.CenterVertically,
-//                horizontalArrangement = Arrangement.Center,
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .padding(top = 4.dp)
-//            ) {
-//                ButtonDef(
-//                    icon = R.drawable.wifi,
-//                    stringResource(id = R.string.wifiOrder),
-//                    onClick = {}
-//                )
-//            }
         }
     }
 }
