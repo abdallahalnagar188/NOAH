@@ -1,11 +1,13 @@
 package com.example.noah.screen.cards
 
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,18 +18,27 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ProgressIndicatorDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -37,16 +48,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.noah.R
 import com.example.noah.view_model.HomeViewModel
+import kotlinx.coroutines.delay
 
 @Composable
-fun CardDoor(painter: Painter, onTClick: (Boolean) -> Unit) {
+fun CardDoor(painter: Painter, onTClick: (Boolean) -> Unit, isLoading: Boolean, errorMessage: String?) {
     val vm: HomeViewModel = remember { HomeViewModel() }
     val lastFingerUser by vm.lastFingerUser.collectAsState()
     val doorFingerUsers by vm.doorFingerUsers.collectAsState()
 
     Card(
         modifier = Modifier
-            .fillMaxHeight(0.38f)
+            .fillMaxHeight(0.45f)
             .padding(horizontal = 30.dp),
         colors = CardDefaults.cardColors(
             containerColor = Color.Transparent
@@ -57,33 +69,35 @@ fun CardDoor(painter: Painter, onTClick: (Boolean) -> Unit) {
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxSize()
         ) {
+            Box(contentAlignment = Alignment.Center) {
+                IconButton(onClick = { onTClick(true) }, modifier = Modifier.size(170.dp)) {
+                    Image(
+                        painter = painter,
+                        contentDescription = "Image Finger",
+                        contentScale = ContentScale.FillBounds,
+                        modifier = Modifier.size(170.dp)
+                    )
+                }
+                if (isLoading) {
 
-//            Image(
-//                painter = painter,
-//                contentDescription = "Image Finger Door",
-//                contentScale = ContentScale.FillBounds,
-//                modifier = Modifier.size(170.dp)
-//
-//            )
-            IconButton(onClick = { onTClick(true)}, modifier = Modifier.size(170.dp)) {
-                Image(
-                    painter = painter, contentDescription = "Image Finger ",
-                    contentScale = ContentScale.FillBounds,
-                    modifier = Modifier.size(170.dp)
-                )
-
+                }
             }
-
+            Spacer(modifier = Modifier.height(30.dp))
+            if (errorMessage != null) {
+                Text(
+                    text = errorMessage,
+                    color = Color.Red,
+                    modifier = Modifier.padding(top = 8.dp)
+                )
+            }
             Row(
                 Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                CardItemOfCont(name = lastFingerUser, stringResource(id = R.string.lastUser))
-                CardItemOfCont(name = doorFingerUsers, stringResource(id = R.string.users))
-
+                CardItemOfCont(name = lastFingerUser, lastOrUsers = stringResource(id = R.string.lastUser))
+                CardItemOfCont(name = doorFingerUsers, lastOrUsers = stringResource(id = R.string.users))
             }
-
         }
     }
 }
@@ -112,9 +126,7 @@ fun CardItemOfCont(name: String, lastOrUsers: String) {
                     fontSize = 24.sp,
                     fontFamily = FontFamily.Serif,
                     style = TextStyle(color = Color.DarkGray),
-                    modifier = Modifier.align(
-                        Alignment.Center
-                    )
+                    modifier = Modifier.align(Alignment.Center)
                 )
             }
         }
@@ -130,3 +142,4 @@ fun CardItemOfCont(name: String, lastOrUsers: String) {
         )
     }
 }
+

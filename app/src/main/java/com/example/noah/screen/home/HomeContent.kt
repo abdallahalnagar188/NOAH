@@ -1,5 +1,6 @@
 package com.example.noah.screen.home
 
+
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -15,7 +16,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
@@ -30,13 +33,21 @@ import com.example.noah.screen.buttons.ButtonDef
 import com.example.noah.screen.cards.CardDoor
 import com.example.noah.view_model.HomeViewModel
 import com.example.noah.view_model.Repo
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
+
 fun HomeContent(navController: NavController) {
     val vm: HomeViewModel = remember { HomeViewModel() }
     val activity = LocalContext.current as MainActivity
     val wifiOrder by vm.wifiOrder.observeAsState(false)
+
+    val isCardDoorLoading = remember { mutableStateOf(false) }
+    val cardDoorError = remember { mutableStateOf<String?>(null) }
+    val coroutineScope = rememberCoroutineScope()
+
     val bg = if (wifiOrder) {
         painterResource(id = R.drawable.iconapptwo)
     } else {
@@ -55,11 +66,26 @@ fun HomeContent(navController: NavController) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             HomeTopBar(navController)
-            CardDoor(painter = bg,
+            CardDoor(
+                painter = bg,
                 onTClick = {
+                    isCardDoorLoading.value = true
+                    cardDoorError.value = null
                     Repo(activity).wifiOrderToShard(true)
                     vm.updateWifiOrder(true)
-                })
+
+                    // Start timeout
+                    coroutineScope.launch {
+                        delay(30000)
+                        if (wifiOrder) {
+                            isCardDoorLoading.value = false
+                            cardDoorError.value = "Failed to update WiFi order"
+                        }
+                    }
+                },
+                isLoading = isCardDoorLoading.value,
+                errorMessage = cardDoorError.value
+            )
             Spacer(modifier = Modifier.height(30.dp))
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -85,7 +111,6 @@ fun HomeContent(navController: NavController) {
                         vm.updateWifiOrder(true)
                         vm.observeWiFiOrderAndUpdateDeleteFingerUser()
                     }
-
                 )
             }
             Spacer(modifier = Modifier.height(30.dp))
@@ -100,11 +125,10 @@ fun HomeContent(navController: NavController) {
                     icon = R.drawable.unlock,
                     namOfButton = stringResource(id = R.string.unLock),
                     onClick = {
-
                         Repo(activity).unlockToShard(true)
                         vm.updateWifiOrder(true)
                         vm.observeWiFiOrderAndUpdateUnlock()
-                    },
+                    }
                 )
                 ButtonDef(
                     icon = R.drawable.fingerprint,
@@ -119,3 +143,4 @@ fun HomeContent(navController: NavController) {
         }
     }
 }
+
