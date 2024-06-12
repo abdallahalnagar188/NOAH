@@ -35,6 +35,8 @@ fun ButtonDef(
     namOfButton: String,
     onClick: (Boolean) -> Unit = {},
     boolean: Boolean = false,
+    isLoading: Boolean,
+    errorMessage: String?
 ) {
     val isSelectedState = rememberSaveable { mutableStateOf(boolean) }
     Column(
@@ -79,6 +81,15 @@ fun ButtonDef(
             style = TextStyle(color = Color.White),
 
             )
+        if (isLoading) {
+        }
+        if (errorMessage != null) {
+            Text(
+                text = errorMessage,
+                color = Color.Red,
+                modifier = Modifier.padding(top = 8.dp)
+            )
+        }
     }
 }
 

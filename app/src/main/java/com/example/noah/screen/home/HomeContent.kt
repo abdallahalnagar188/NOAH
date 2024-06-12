@@ -45,6 +45,19 @@ fun HomeContent(navController: NavController) {
 
     val isCardDoorLoading = remember { mutableStateOf(false) }
     val cardDoorError = remember { mutableStateOf<String?>(null) }
+
+    val isAddFingerLoading = remember { mutableStateOf(false) }
+    val addFingerError = remember { mutableStateOf<String?>(null) }
+
+    val isDeleteUsersLoading = remember { mutableStateOf(false) }
+    val deleteUsersError = remember { mutableStateOf<String?>(null) }
+
+    val isUnlockLoading = remember { mutableStateOf(false) }
+    val unlockError = remember { mutableStateOf<String?>(null) }
+
+    val isFingerModeLoading = remember { mutableStateOf(false) }
+    val fingerModeError = remember { mutableStateOf<String?>(null) }
+
     val coroutineScope = rememberCoroutineScope()
 
     val bg = if (wifiOrder) {
@@ -78,7 +91,7 @@ fun HomeContent(navController: NavController) {
                         delay(30000)
                         if (wifiOrder) {
                             isCardDoorLoading.value = false
-                            cardDoorError.value = "Failed to update WiFi order"
+                            cardDoorError.value = "Failed to connected"
                         }
                     }
                 },
@@ -97,19 +110,40 @@ fun HomeContent(navController: NavController) {
                     icon = R.drawable.ic_finger,
                     namOfButton = stringResource(id = R.string.addFingerPrint),
                     onClick = {
+                        isAddFingerLoading.value = true
+                        addFingerError.value = null
                         Repo(activity).addFingerToShard(true)
                         vm.updateWifiOrder(true)
                         vm.observeWiFiOrderAndUpdateAddFingerUser()
-                    }
+
+                        coroutineScope.launch {
+                            delay(30000)
+                            if (wifiOrder) {
+                                isAddFingerLoading.value = false
+                                addFingerError.value = "Failed to connected"
+                            }
+                        }
+                    }, isLoading =  isAddFingerLoading.value,
+                    errorMessage = addFingerError.value
                 )
                 ButtonDef(
                     icon = R.drawable.ic_delete,
                     namOfButton = stringResource(id = R.string.deleteFingerUsers),
                     onClick = {
+                        isDeleteUsersLoading.value = true
+                        deleteUsersError.value = null
                         Repo(activity).deleteUsersToShard(true)
                         vm.updateWifiOrder(true)
                         vm.observeWiFiOrderAndUpdateDeleteFingerUser()
-                    }
+                        coroutineScope.launch {
+                            delay(30000)
+                            if (wifiOrder) {
+                                isDeleteUsersLoading.value = false
+                                deleteUsersError.value = "Failed to connected"
+                            }
+                        }
+                    }, isLoading = isDeleteUsersLoading.value,
+                    errorMessage = deleteUsersError.value
                 )
             }
             Spacer(modifier = Modifier.height(30.dp))
@@ -124,19 +158,40 @@ fun HomeContent(navController: NavController) {
                     icon = R.drawable.unlock,
                     namOfButton = stringResource(id = R.string.unLock),
                     onClick = {
+                        isUnlockLoading.value = true
+                        unlockError.value = null
                         Repo(activity).unlockToShard(true)
                         vm.updateWifiOrder(true)
                         vm.observeWiFiOrderAndUpdateUnlock()
-                    }
+
+                        coroutineScope.launch {
+                            delay(30000)
+                            if (wifiOrder){
+                                isUnlockLoading.value = false
+                                unlockError.value = "Failed to connected"
+                            }
+                        }
+                    }, isLoading = isUnlockLoading.value,
+                    errorMessage = unlockError.value
                 )
                 ButtonDef(
                     icon = R.drawable.fingerprint,
                     namOfButton = stringResource(id = R.string.fingerMode),
                     onClick = {
+                        isFingerModeLoading.value = true
+                        fingerModeError.value = null
                         Repo(activity).fingerModeToShard(true)
                         vm.updateWifiOrder(true)
                         vm.observeWiFiOrderAndUpdateFingerMode()
-                    }
+                        coroutineScope.launch {
+                            delay(30000)
+                            if (wifiOrder){
+                                isUnlockLoading.value = false
+                                unlockError.value = "Failed to connected"
+                            }
+                        }
+                    }, isLoading = isFingerModeLoading.value,
+                    errorMessage = fingerModeError.value
                 )
             }
         }
