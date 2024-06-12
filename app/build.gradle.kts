@@ -71,11 +71,20 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:2.5.3")
     implementation(libs.androidx.runtime.livedata)
 
-    implementation (platform("com.google.firebase:firebase-bom:31.1.0"))
-    implementation ("com.google.firebase:firebase-database-ktx")
-    implementation( "com.google.firebase:firebase-auth-ktx")
-    implementation ("com.google.zxing:core:3.4.1")
-    implementation ("com.journeyapps:zxing-android-embedded:4.1.0")
+//    //QR code
+//    implementation("com.google.mlkit:barcode-scanning:17.0.2")
+//    implementation(" androidx.camera:camera-core:1.1.0")
+//    implementation("androidx.camera:camera-camera2:1.1.0")
+//    implementation("androidx.camera:camera-lifecycle:1.1.0")
+//    implementation(libs.androidx.camera.view.v100alpha30)
+
+//    implementation(libs.camerax)
+//    implementation(libs.camera)
+//    implementation(libs.camerEmbedded)
+//    implementation(libs.cameracore)
+//    implementation(libs.cameralifecycle)
+//    implementation(libs.cameraview)
+
 
 
     //view model

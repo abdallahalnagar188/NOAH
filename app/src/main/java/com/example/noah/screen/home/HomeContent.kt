@@ -38,7 +38,6 @@ import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-
 fun HomeContent(navController: NavController) {
     val vm: HomeViewModel = remember { HomeViewModel() }
     val activity = LocalContext.current as MainActivity
@@ -143,4 +142,3 @@ fun HomeContent(navController: NavController) {
         }
     }
 }
-
