@@ -85,7 +85,7 @@ dependencies {
 //    implementation(libs.cameralifecycle)
 //    implementation(libs.cameraview)
 
-
+    implementation("androidx.compose.animation:animation:1.3.0")
 
     //view model
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose-android:2.8.0-rc01")

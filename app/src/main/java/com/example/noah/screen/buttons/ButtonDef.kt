@@ -1,5 +1,9 @@
 package com.example.noah.screen.buttons
 
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -13,6 +17,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -43,7 +48,10 @@ fun ButtonDef(
         verticalArrangement = Arrangement.SpaceEvenly,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Box(contentAlignment = Alignment.Center) {
+        Box(
+            contentAlignment = Alignment.Center
+        ) {
+            // زر التشغيل
             Button(
                 onClick = {
                     isSelectedState.value = !isSelectedState.value
@@ -69,7 +77,16 @@ fun ButtonDef(
                     tint = colorResource(id = R.color.coffie2)
                 )
             }
+
+
+            if (isLoading) {
+                CircularProgressAnimated(
+                    modifier = Modifier.size(88.dp)
+                )
+            }
         }
+
+        // اسم الزر
         Text(
             text = namOfButton,
             modifier = Modifier
@@ -78,11 +95,10 @@ fun ButtonDef(
             fontSize = 18.sp,
             fontWeight = FontWeight.Normal,
             fontFamily = FontFamily.Serif,
-            style = TextStyle(color = Color.White),
+            style = TextStyle(color = Color.White)
+        )
 
-            )
-        if (isLoading) {
-        }
+        // رسالة الخطأ إن وجدت
         if (errorMessage != null) {
             Text(
                 text = errorMessage,
@@ -93,4 +109,21 @@ fun ButtonDef(
     }
 }
 
+
+@Composable
+private fun CircularProgressAnimated(modifier: Modifier) {
+    val infiniteTransition = rememberInfiniteTransition(label = "")
+
+    val progressAnimationValue by infiniteTransition.animateFloat(
+        initialValue = 0.0f,
+        targetValue = 1.0f,
+        animationSpec = infiniteRepeatable(animation = tween(900)),
+        label = ""
+    )
+    CircularProgressIndicator(
+        progress = progressAnimationValue,
+        color = colorResource(id = R.color.coffie),
+        modifier = modifier
+    )
+}
 

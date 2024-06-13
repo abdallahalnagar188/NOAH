@@ -14,6 +14,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -66,6 +67,16 @@ fun HomeContent(navController: NavController) {
         painterResource(id = R.drawable.iconapp)
     }
 
+    LaunchedEffect(wifiOrder) {
+        if (!wifiOrder) {
+            isCardDoorLoading.value = false
+            isAddFingerLoading.value = false
+            isDeleteUsersLoading.value = false
+            isUnlockLoading.value = false
+            isFingerModeLoading.value = false
+        }
+    }
+
     Scaffold {
         Column(
             modifier = Modifier
@@ -89,9 +100,9 @@ fun HomeContent(navController: NavController) {
                     // Start timeout
                     coroutineScope.launch {
                         delay(30000)
-                        if (wifiOrder) {
+                        if (isCardDoorLoading.value) {
                             isCardDoorLoading.value = false
-                            cardDoorError.value = "Failed to connected"
+                            cardDoorError.value = "Failed to connect"
                         }
                     }
                 },
@@ -118,12 +129,12 @@ fun HomeContent(navController: NavController) {
 
                         coroutineScope.launch {
                             delay(30000)
-                            if (wifiOrder) {
+                            if (isAddFingerLoading.value) {
                                 isAddFingerLoading.value = false
-                                addFingerError.value = "Failed to connected"
+                                addFingerError.value = "Failed to connect"
                             }
                         }
-                    }, isLoading =  isAddFingerLoading.value,
+                    }, isLoading = isAddFingerLoading.value,
                     errorMessage = addFingerError.value
                 )
                 ButtonDef(
@@ -137,9 +148,9 @@ fun HomeContent(navController: NavController) {
                         vm.observeWiFiOrderAndUpdateDeleteFingerUser()
                         coroutineScope.launch {
                             delay(30000)
-                            if (wifiOrder) {
+                            if (isDeleteUsersLoading.value) {
                                 isDeleteUsersLoading.value = false
-                                deleteUsersError.value = "Failed to connected"
+                                deleteUsersError.value = "Failed to connect"
                             }
                         }
                     }, isLoading = isDeleteUsersLoading.value,
@@ -166,9 +177,9 @@ fun HomeContent(navController: NavController) {
 
                         coroutineScope.launch {
                             delay(30000)
-                            if (wifiOrder){
+                            if (isUnlockLoading.value) {
                                 isUnlockLoading.value = false
-                                unlockError.value = "Failed to connected"
+                                unlockError.value = "Failed to connect"
                             }
                         }
                     }, isLoading = isUnlockLoading.value,
@@ -185,9 +196,9 @@ fun HomeContent(navController: NavController) {
                         vm.observeWiFiOrderAndUpdateFingerMode()
                         coroutineScope.launch {
                             delay(30000)
-                            if (wifiOrder){
-                                isUnlockLoading.value = false
-                                unlockError.value = "Failed to connected"
+                            if (isFingerModeLoading.value) {
+                                isFingerModeLoading.value = false
+                                fingerModeError.value = "Failed to connect"
                             }
                         }
                     }, isLoading = isFingerModeLoading.value,
@@ -197,3 +208,4 @@ fun HomeContent(navController: NavController) {
         }
     }
 }
+
