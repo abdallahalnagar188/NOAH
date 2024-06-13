@@ -142,7 +142,7 @@ fun PasswordScreen(navController: NavController) {
                 }
             }) {
             Text(
-                text = "Submit",
+                text = "Login",
                 style = TextStyle(color = Color.Black),
                 fontSize = 22.sp,
                 fontFamily = FontFamily.Serif,
@@ -155,7 +155,7 @@ fun PasswordScreen(navController: NavController) {
             Spacer(modifier = Modifier.height(16.dp))
             Text(
                 errorMessage,
-                color = Color.White,
+                color = Color.Red,
                 fontSize = 20.sp,
                 modifier = Modifier.padding(8.dp)
             )
