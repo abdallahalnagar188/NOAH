@@ -134,7 +134,8 @@ fun HomeContent(navController: NavController) {
                                 addFingerError.value = "Failed to connect"
                             }
                         }
-                    }, isLoading = isAddFingerLoading.value,
+                    },
+                    isLoading = isAddFingerLoading.value,
                     errorMessage = addFingerError.value
                 )
                 ButtonDef(
@@ -153,7 +154,8 @@ fun HomeContent(navController: NavController) {
                                 deleteUsersError.value = "Failed to connect"
                             }
                         }
-                    }, isLoading = isDeleteUsersLoading.value,
+                    },
+                    isLoading = isDeleteUsersLoading.value,
                     errorMessage = deleteUsersError.value
                 )
             }
@@ -182,7 +184,8 @@ fun HomeContent(navController: NavController) {
                                 unlockError.value = "Failed to connect"
                             }
                         }
-                    }, isLoading = isUnlockLoading.value,
+                    },
+                    isLoading = isUnlockLoading.value,
                     errorMessage = unlockError.value
                 )
                 ButtonDef(
@@ -201,7 +204,8 @@ fun HomeContent(navController: NavController) {
                                 fingerModeError.value = "Failed to connect"
                             }
                         }
-                    }, isLoading = isFingerModeLoading.value,
+                    },
+                    isLoading = isFingerModeLoading.value,
                     errorMessage = fingerModeError.value
                 )
             }

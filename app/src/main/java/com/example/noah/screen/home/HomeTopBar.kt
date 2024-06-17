@@ -2,7 +2,12 @@ package com.example.noah.screen.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
@@ -30,7 +35,9 @@ fun HomeTopBar(navController: NavController) {
         ) {
             // زر التنقل إلى شاشة "aboutUs"
             IconButton(
-                onClick = { navController.navigate("aboutUs") },
+                onClick = {
+                    navController.navigate("aboutUs")
+                },
                 modifier = Modifier
                     .size(70.dp)
                     .padding(horizontal = 12.dp)
@@ -48,6 +55,7 @@ fun HomeTopBar(navController: NavController) {
                 painter = painterResource(id = R.drawable.noahimage),
                 contentDescription = "Noah Image Top Bar",
                 modifier = Modifier
+                    .size(60.dp)
                     .align(Alignment.CenterVertically)
             )
 
