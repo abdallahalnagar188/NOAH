@@ -8,4 +8,5 @@
     <string name="fingerMode">Finger M</string>
     <string name="unLock">Unlock</string>
     <string name="wifiOrder">Wifi Order</string>
+    <string name="Failed">Failed to connect</string>
 </resources>

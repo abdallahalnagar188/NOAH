@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
-    id("com.google.gms.google-services")
 }
 
 android {
@@ -71,12 +70,9 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:2.5.3")
     implementation(libs.androidx.runtime.livedata)
 
-//    //QR code
-//    implementation("com.google.mlkit:barcode-scanning:17.0.2")
-//    implementation(" androidx.camera:camera-core:1.1.0")
-//    implementation("androidx.camera:camera-camera2:1.1.0")
-//    implementation("androidx.camera:camera-lifecycle:1.1.0")
-//    implementation(libs.androidx.camera.view.v100alpha30)
+    //QR code
+    implementation ("com.journeyapps:zxing-android-embedded:4.3.0")
+    implementation ("com.google.zxing:core:3.3.3")
 
 //    implementation(libs.camerax)
 //    implementation(libs.camera)

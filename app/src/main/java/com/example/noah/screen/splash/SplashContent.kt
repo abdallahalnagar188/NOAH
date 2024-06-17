@@ -25,13 +25,12 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun SplashScreen(navController: NavController) {
-    LaunchedEffect(key1 = true) {
+    LaunchedEffect(Unit) {
         delay(2000)  // Delay for 2 seconds
         navController.navigate("qrCode") {
             popUpTo("splash") { inclusive = true }
         }
     }
-
     SplashContent()
 }
 

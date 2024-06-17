@@ -8,4 +8,5 @@
     <string name="fingerMode">وضع البصمه</string>
     <string name="unLock">قفل</string>
     <string name="wifiOrder">اتصال بالواي فاي</string>
+    <string name="Failed">فشل الاتصال</string>
 </resources>
