@@ -1,89 +1,81 @@
 package com.example.noah.screen.qrCood
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Arrangement
+import android.app.Activity
+import android.content.Context
+import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.paint
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
-import com.example.noah.R
+import com.google.firebase.FirebaseApp
+import com.google.firebase.FirebaseOptions
+import com.journeyapps.barcodescanner.ScanContract
+import com.journeyapps.barcodescanner.ScanOptions
+import org.json.JSONException
+import org.json.JSONObject
 
 @Composable
 fun QrScreen(navController: NavController) {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
+    val context = LocalContext.current as Activity
+    val sharedPreferences = context.getSharedPreferences("qr_data", Context.MODE_PRIVATE)
 
-    ) {
-        Column(
-            Modifier
-                .fillMaxSize()
-                .paint(
-                    painter = painterResource(id = R.drawable.bgcolor),
-                    contentScale = ContentScale.FillBounds
-                ),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            Image(
-                painter = painterResource(id = R.drawable.qr_code),
-                contentDescription = "Qr Image", Modifier.padding(top = 80.dp)
-            )
-            Spacer(modifier = Modifier.height(60.dp))
+    val launcher = rememberLauncherForActivityResult(ScanContract()) { result ->
+        if (result.contents != null) {
+            // Save the scanned data in SharedPreferences
+            sharedPreferences.edit().putString("qr_data", result.contents).apply()
 
-            Button(
-                onClick = {
-                    navController.navigate("password") {
-                        popUpTo("qrCode") { inclusive = true }
+            // Attempt to parse the scanned data as JSON
+            try {
+                val jsonData = JSONObject(result.contents)
+
+                // If parsing is successful, proceed with Firebase initialization
+                val options = FirebaseOptions.Builder()
+                    .setApiKey(jsonData.getString("apiKey"))
+                    .setApplicationId(jsonData.getString("appId"))
+                    .setDatabaseUrl(jsonData.getString("databaseURL"))
+                    .setProjectId(jsonData.getString("projectId"))
+                    .setStorageBucket(jsonData.getString("storageBucket"))
+                    .setGcmSenderId(jsonData.getString("messagingSenderId"))
+                    .build()
+
+                if (FirebaseApp.getApps(context).isEmpty()) {
+                    FirebaseApp.initializeApp(context, options)
+                }
+                // Navigate to Password Screen after Firebase initialization
+                navController.navigate("password"){
+                    popUpTo("qrCode"){
+                        inclusive = true
                     }
-                },
-                Modifier.border(
-                    2.5.dp,
-                    colorResource(id = R.color.coffie2),
-                    shape = RoundedCornerShape(20.dp)
-                ),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = colorResource(id = R.color.coffie)
-                ), shape = RoundedCornerShape(20.dp)
-            ) {
-                Text(
-                    text = "Scan Qr",
-                    style = TextStyle(color = Color.Black),
-                    fontSize = 22.sp,
-                    fontFamily = FontFamily.Serif,
-                    fontWeight = FontWeight.W600 ,
-                    modifier = Modifier.padding(horizontal = 40.dp, vertical = 10.dp)
-                )
+                }
+            } catch (e: JSONException) {
+                // If parsing as JSON fails, handle non-JSON data
+                Log.e("QrScreen", "Error parsing QR code data as JSON: ${e.message}")
+                handleNonJsonData(result.contents)
             }
+        }
+    }
 
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Button(onClick = {
+            launcher.launch(ScanOptions())
+        }) {
+            Text("Scan QR Code")
         }
     }
 }
 
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun PreviewQr(modifier: Modifier = Modifier) {
-
+private fun handleNonJsonData(data: String) {
+    // Handle the case where the data is not JSON, e.g., it's a URL
+    // For demonstration, just log it
+    Log.d("QrScreen", "Non-JSON QR code data: $data")
+    // Optionally show an error or information to the user
 }

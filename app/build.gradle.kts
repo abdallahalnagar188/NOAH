@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
-    id("com.google.gms.google-services")
 }
 
 android {
@@ -64,28 +63,18 @@ dependencies {
     //fireBase real time
     implementation(platform("com.google.firebase:firebase-bom:33.0.0"))
     implementation("com.google.firebase:firebase-database-ktx")
-    implementation(platform("com.google.firebase:firebase-bom:33.0.0"))
     implementation("com.google.firebase:firebase-analytics")
     implementation(libs.androidx.navigation.runtime.ktx)
     implementation(libs.androidx.navigation.compose)
-    implementation("androidx.navigation:navigation-compose:2.5.3")
     implementation(libs.androidx.runtime.livedata)
 
-//    //QR code
-//    implementation("com.google.mlkit:barcode-scanning:17.0.2")
-//    implementation(" androidx.camera:camera-core:1.1.0")
-//    implementation("androidx.camera:camera-camera2:1.1.0")
-//    implementation("androidx.camera:camera-lifecycle:1.1.0")
-//    implementation(libs.androidx.camera.view.v100alpha30)
+    implementation(libs.zxing.android.embedded)
+    implementation ("com.journeyapps:zxing-android-embedded:4.3.0")
+    implementation ("com.google.zxing:core:3.3.0")
+    implementation ("com.google.zxing:core:3.3.0")
+    val camerax_version = "1.3.0" // Use the latest version available
+    implementation ("androidx.camera:camera-camera2:${camerax_version}")
 
-//    implementation(libs.camerax)
-//    implementation(libs.camera)
-//    implementation(libs.camerEmbedded)
-//    implementation(libs.cameracore)
-//    implementation(libs.cameralifecycle)
-//    implementation(libs.cameraview)
-
-    implementation("androidx.compose.animation:animation:1.3.0")
 
     //view model
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose-android:2.8.0-rc01")
@@ -94,6 +83,9 @@ dependencies {
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation ("com.google.code.gson:gson:2.10.1")
+    implementation(libs.androidx.camera.core)
+    implementation(libs.androidx.camera.lifecycle)
+    implementation(libs.androidx.camera.view)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
