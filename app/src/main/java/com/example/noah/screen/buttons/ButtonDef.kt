@@ -111,7 +111,7 @@ fun ButtonDef(
 
 
 @Composable
-private fun CircularProgressAnimated(modifier: Modifier) {
+fun CircularProgressAnimated(modifier: Modifier) {
     val infiniteTransition = rememberInfiniteTransition(label = "")
 
     val progressAnimationValue by infiniteTransition.animateFloat(

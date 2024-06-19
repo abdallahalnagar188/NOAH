@@ -1,4 +1,4 @@
-package com.example.noah.view_model
+package com.example.noah.screen.password
 
 import android.content.Context
 import android.content.SharedPreferences

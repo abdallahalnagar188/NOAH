@@ -1,49 +1,66 @@
 package com.example.noah.screen.qrCood
 
-
 import android.content.Context
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.google.firebase.FirebaseApp
 import com.google.firebase.FirebaseOptions
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import org.json.JSONException
 import org.json.JSONObject
 
 class QrCodeViewModel : ViewModel() {
-    private val _isFirebaseInitialized = mutableStateOf(false)
-    val isFirebaseInitialized: Boolean get() = _isFirebaseInitialized.value
+    var isFirebaseInitialized = mutableStateOf(false)
+        private set
 
-    fun onQrCodeScanned(contents: String, context: Context) {
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-                initializeFirebase(context, contents)
-                _isFirebaseInitialized.value = true
-            } catch (e: JSONException) {
-                e.printStackTrace()
-                // Handle JSON parsing error
-            }
+    fun handleQRCodeResult(context: Context, qrCodeResult: String) {
+        try {
+            val config = parseQRCodeResult(qrCodeResult)
+            initializeFirebase(context, config)
+        } catch (e: JSONException) {
+            e.printStackTrace()
+            // Handle JSON parsing error
         }
     }
 
-    private fun initializeFirebase(context: Context, qrData: String) {
+    private fun parseQRCodeResult(qrCodeResult: String): FirebaseConfig {
+        val json = JSONObject(qrCodeResult)
+        return FirebaseConfig(
+            apiKey = json.getString("apiKey"),
+            authDomain = json.getString("authDomain"),
+            databaseURL = json.getString("databaseURL"),
+            projectId = json.getString("projectId"),
+            storageBucket = json.getString("storageBucket"),
+            messagingSenderId = json.getString("messagingSenderId"),
+            appId = json.getString("appId")
+        )
+    }
+
+    private fun initializeFirebase(context: Context, config: FirebaseConfig) {
         try {
-            val jsonObject = JSONObject(qrData)
             val options = FirebaseOptions.Builder()
-                .setApplicationId(jsonObject.getString("appId"))
-                .setApiKey(jsonObject.getString("apiKey"))
-                .setDatabaseUrl(jsonObject.getString("databaseURL"))
-                .setStorageBucket(jsonObject.getString("storageBucket"))
-                .setProjectId(jsonObject.getString("projectId"))
+                .setApiKey(config.apiKey)
+                .setApplicationId(config.appId)
+                .setDatabaseUrl(config.databaseURL)
+                .setProjectId(config.projectId)
+                .setStorageBucket(config.storageBucket)
+                .setGcmSenderId(config.messagingSenderId)
                 .build()
 
-            FirebaseApp.initializeApp(context, options, jsonObject.getString("projectId"))
-        } catch (e: JSONException) {
-            throw e  // Re-throw the exception to be caught in the outer try-catch block
+            FirebaseApp.initializeApp(context, options)
+            isFirebaseInitialized.value = true
+        } catch (e: Exception) {
+            e.printStackTrace()
+            isFirebaseInitialized.value = false
         }
     }
 }
 
-
+data class FirebaseConfig(
+    val apiKey: String,
+    val authDomain: String,
+    val databaseURL: String,
+    val projectId: String,
+    val storageBucket: String,
+    val messagingSenderId: String,
+    val appId: String
+)
