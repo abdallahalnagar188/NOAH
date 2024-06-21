@@ -4,10 +4,10 @@
     <selectionStates>
       <SelectionState runConfigName="NOAH">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2024-06-11T10:59:43.063877800Z">
+        <DropdownSelection timestamp="2024-06-20T20:55:39.314936700Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\PC\.android\avd\Pixel_6a_API_30.avd" />
+              <DeviceId pluginId="PhysicalDevice" identifier="serial=R58NB2243ML" />
             </handle>
           </Target>
         </DropdownSelection>

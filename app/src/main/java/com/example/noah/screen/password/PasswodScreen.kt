@@ -34,17 +34,20 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.noah.R
-import com.example.noah.view_model.PasswordManager
+import com.example.noah.view_model.PasswordViewModelFactory
 
 @Composable
-fun PasswordScreen(navController: NavController) {
+fun PasswordScreen(
+    navController: NavController,
+    viewModel: PasswordViewModel = viewModel(factory = PasswordViewModelFactory(LocalContext.current))
+) {
     val context = LocalContext.current
-    val passwordManager = remember { PasswordManager(context) }
     var password by remember { mutableStateOf("") }
     var confirmedPassword by remember { mutableStateOf("") }
-    var isFirstTime by remember { mutableStateOf(!passwordManager.isPasswordSet()) }
+    var isFirstTime by remember { mutableStateOf(!viewModel.isPasswordSet()) }
     var errorMessage by remember { mutableStateOf("") }
 
     Column(
@@ -122,22 +125,23 @@ fun PasswordScreen(navController: NavController) {
             onClick = {
                 if (isFirstTime) {
                     if (password == confirmedPassword && password.length == 6) {
-                        passwordManager.savePassword(password)
+                        viewModel.savePassword(password)
                         isFirstTime = false
                         navController.navigate("home") {
                             popUpTo("password") { inclusive = true }
                         }
                     } else {
-                        errorMessage = "please enter a 6 digit password"
+                        errorMessage = "Please enter a 6 digit password"
                     }
                 } else {
-                    val storedPassword = passwordManager.getPassword()
-                    if (storedPassword == password) {
-                        navController.navigate("home") {
-                            popUpTo("password") { inclusive = true }
+                    viewModel.checkPasswordFromSharedPrefs(password) { isCorrect ->
+                        if (isCorrect) {
+                            navController.navigate("home") {
+                                popUpTo("password") { inclusive = true }
+                            }
+                        } else {
+                            errorMessage = "Incorrect password"
                         }
-                    } else {
-                        errorMessage = "Incorrect password"
                     }
                 }
             }) {
@@ -162,4 +166,3 @@ fun PasswordScreen(navController: NavController) {
         }
     }
 }
-

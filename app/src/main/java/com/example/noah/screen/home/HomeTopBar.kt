@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -47,8 +48,8 @@ fun HomeTopBar(navController: NavController) {
             Image(
                 painter = painterResource(id = R.drawable.noahimage),
                 contentDescription = "Noah Image Top Bar",
-                modifier = Modifier
-                    .align(Alignment.CenterVertically)
+                modifier = Modifier.size(height = 80.dp, width = 150.dp)
+                    .align(Alignment.CenterVertically), contentScale = ContentScale.Fit
             )
 
             // زر التنقل إلى شاشة "settings"

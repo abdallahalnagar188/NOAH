@@ -1,21 +1,16 @@
 package com.example.noah.view_model
 
 import android.content.Context
-import android.content.SharedPreferences
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import com.example.noah.screen.password.PasswordViewModel
 
-class PasswordManager(context: Context) {
-    private val sharedPreferences: SharedPreferences =
-        context.getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
-
-    fun savePassword(password: String) {
-        sharedPreferences.edit().putString("password", password).apply()
-    }
-
-    fun getPassword(): String? {
-        return sharedPreferences.getString("password", null)
-    }
-
-    fun isPasswordSet(): Boolean {
-        return getPassword() != null
+class PasswordViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(PasswordViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return PasswordViewModel(context) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
     }
 }

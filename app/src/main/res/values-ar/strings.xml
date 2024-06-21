@@ -8,4 +8,8 @@
     <string name="fingerMode">وضع البصمه</string>
     <string name="unLock">قفل</string>
     <string name="wifiOrder">اتصال بالواي فاي</string>
+    <string name="language">اللغة</string>
+    <string name="arabic">العربيه</string>
+    <string name="english">الانجليزية</string>
+    <string name="language_selected">Language Selected</string>
 </resources>

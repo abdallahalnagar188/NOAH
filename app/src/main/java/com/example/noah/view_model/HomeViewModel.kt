@@ -155,6 +155,7 @@ class HomeViewModel : ViewModel() {
         })
     }
 
+
     fun observeWiFiOrderAndUpdateAddFingerUser() {
         myRefWifi.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {

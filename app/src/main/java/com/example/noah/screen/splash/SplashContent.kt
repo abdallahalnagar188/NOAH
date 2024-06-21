@@ -20,18 +20,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.noah.R
+import com.example.noah.screen.buttons.CircularProgressAnimated
 import kotlinx.coroutines.delay
 
 
 @Composable
-fun SplashScreen(navController: NavController) {
+fun SplashScreen(navController: NavController, onSplashComplete: () -> Unit) {
     LaunchedEffect(key1 = true) {
         delay(2000)  // Delay for 2 seconds
-        navController.navigate("qrCode") {
-            popUpTo("splash") { inclusive = true }
-        }
-    }
+        onSplashComplete()
 
+    }
     SplashContent()
 }
 
@@ -56,11 +55,15 @@ fun SplashContent() {
                 contentDescription = "Splash Logo",
                 modifier = Modifier.size(200.dp)
             )
+            Spacer(modifier = Modifier.height(20.dp))
             Image(
                 painter = painterResource(id = R.drawable.noahimage),
                 contentDescription = "Noah Image",
                 modifier = Modifier
             )
+            Spacer(modifier = Modifier.height(40.dp))
+            CircularProgressAnimated(modifier = Modifier.size(50.dp))
+
         }
     }
 }

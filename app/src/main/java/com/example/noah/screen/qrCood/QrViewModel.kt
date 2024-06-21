@@ -5,20 +5,54 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import com.example.noah.models.FirebaseConfig
 import com.google.firebase.FirebaseApp
 import com.google.firebase.FirebaseOptions
+import com.google.gson.Gson
 import org.json.JSONException
 import org.json.JSONObject
 
-data class FirebaseConfig(
-    val apiKey: String,
-    val authDomain: String,
-    val databaseURL: String,
-    val projectId: String,
-    val storageBucket: String,
-    val messagingSenderId: String,
-    val appId: String
-)
+
+
+
+
+object SharedPreferencesHelper {
+    private const val PREF_NAME = "qr_data"
+    private const val CONFIG_KEY = "firebase_config"
+
+    fun saveFirebaseConfig(context: Context, config: FirebaseConfig) {
+        val sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        val gson = Gson()
+        val jsonString = gson.toJson(config)
+        editor.putString(CONFIG_KEY, jsonString)
+        editor.apply()
+    }
+
+    fun getFirebaseConfig(context: Context): FirebaseConfig? {
+        val sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+        val jsonString = sharedPreferences.getString(CONFIG_KEY, null)
+        return if (jsonString != null) {
+            val gson = Gson()
+            gson.fromJson(jsonString, FirebaseConfig::class.java)
+        } else {
+            null
+        }
+    }
+}
+
+fun initializeFirebaseApp(context: Context, config: FirebaseConfig) {
+    val options = FirebaseOptions.Builder()
+        .setApiKey(config.apiKey)
+        .setApplicationId(config.appId)
+        .setDatabaseUrl(config.databaseURL)
+        .setProjectId(config.projectId)
+        .build()
+
+    if (FirebaseApp.getApps(context).isEmpty()) {
+        FirebaseApp.initializeApp(context, options)
+    }
+}
 
 class QrCodeViewModel : ViewModel() {
     var isFirebaseInitialized = mutableStateOf(false)
@@ -38,11 +72,8 @@ class QrCodeViewModel : ViewModel() {
         val json = JSONObject(qrCodeResult)
         return FirebaseConfig(
             apiKey = json.getString("apiKey"),
-            authDomain = json.getString("authDomain"),
             databaseURL = json.getString("databaseURL"),
             projectId = json.getString("projectId"),
-            storageBucket = json.getString("storageBucket"),
-            messagingSenderId = json.getString("messagingSenderId"),
             appId = json.getString("appId")
         )
     }
@@ -51,11 +82,8 @@ class QrCodeViewModel : ViewModel() {
         val sharedPreferences: SharedPreferences = context.getSharedPreferences("firebase_config", Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
         editor.putString("apiKey", config.apiKey)
-        editor.putString("authDomain", config.authDomain)
         editor.putString("databaseURL", config.databaseURL)
         editor.putString("projectId", config.projectId)
-        editor.putString("storageBucket", config.storageBucket)
-        editor.putString("messagingSenderId", config.messagingSenderId)
         editor.putString("appId", config.appId)
         editor.apply()
     }
@@ -66,12 +94,10 @@ class QrCodeViewModel : ViewModel() {
         val authDomain = sharedPreferences.getString("authDomain", null)
         val databaseURL = sharedPreferences.getString("databaseURL", null)
         val projectId = sharedPreferences.getString("projectId", null)
-        val storageBucket = sharedPreferences.getString("storageBucket", null)
-        val messagingSenderId = sharedPreferences.getString("messagingSenderId", null)
         val appId = sharedPreferences.getString("appId", null)
 
-        return if (apiKey != null && authDomain != null && databaseURL != null && projectId != null && storageBucket != null && messagingSenderId != null && appId != null) {
-            FirebaseConfig(apiKey, authDomain, databaseURL, projectId, storageBucket, messagingSenderId, appId)
+        return if (apiKey != null && authDomain != null && databaseURL != null && projectId != null  && appId != null) {
+            FirebaseConfig(apiKey, databaseURL, projectId, appId)
         } else {
             null
         }
@@ -89,8 +115,6 @@ class QrCodeViewModel : ViewModel() {
                 .setApplicationId(config.appId)
                 .setDatabaseUrl(config.databaseURL)
                 .setProjectId(config.projectId)
-                .setStorageBucket(config.storageBucket)
-                .setGcmSenderId(config.messagingSenderId)
                 .build()
 
             FirebaseApp.initializeApp(context, options)
