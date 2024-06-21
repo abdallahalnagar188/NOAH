@@ -61,7 +61,6 @@ fun SettingTopBar(navController: NavController) {
                 fontWeight = FontWeight.Medium,
                 modifier = Modifier
             )
-
         }
     }
 }
