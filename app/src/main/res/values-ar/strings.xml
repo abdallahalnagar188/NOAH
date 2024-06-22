@@ -11,5 +11,8 @@
     <string name="language">اللغة</string>
     <string name="arabic">العربيه</string>
     <string name="english">الانجليزية</string>
-    <string name="language_selected">Language Selected</string>
+    <string name="cancel">خروج</string>
+    <string name="language_selected">اختيار لغة</string>
+    <string name="aboutUs">من نحن</string>
+    <string name="settings">الاعدادات</string>
 </resources>

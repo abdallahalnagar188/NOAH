@@ -8,10 +8,12 @@
     <string name="fingerMode">Finger M</string>
     <string name="unLock">Unlock</string>
     <string name="wifiOrder">Wifi Order</string>
-    <!-- strings.xml -->
     <string name="language">Language</string>
     <string name="arabic">Arabic</string>
     <string name="english">English</string>
     <string name="language_selected">Language Selected</string>
+    <string name="cancel">cancel</string>
+    <string name="aboutUs">About Us</string>
+    <string name="settings">Settings</string>
 
 </resources>

@@ -113,7 +113,6 @@ fun ButtonDef(
 @Composable
  fun CircularProgressAnimated(modifier: Modifier) {
     val infiniteTransition = rememberInfiniteTransition(label = "")
-
     val progressAnimationValue by infiniteTransition.animateFloat(
         initialValue = 0.0f,
         targetValue = 1.0f,
